@@ -1,0 +1,38 @@
+﻿  Validating sources
+  Copying sources remotely to '192.168.33.10'
+  Validating architecture
+  Validating architecture
+  Starting remote build
+  Compiling sources:
+  Linking objects
+/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o : error : In function `_start':
+(.text+0x20) : error : undefined reference to `main'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\obj\x64\Debug\mostro.o : error : In function `Mostro::parseConfig(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(37): error : undefined reference to `Json::Value::Value(Json::ValueType)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(38): error : undefined reference to `Json::operator>>(std::istream&, Json::Value&)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(40): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(40): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(40): error : undefined reference to `Json::Value::size() const'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(41): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(41): error : undefined reference to `Json::Value::size() const'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(42): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(42): error : undefined reference to `Json::Value::size() const'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(48): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(48): error : undefined reference to `Json::Value::operator[](int)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(48): error : undefined reference to `Json::Value::operator[](int)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(48): error : undefined reference to `Json::Value::asDouble() const'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(53): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(53): error : undefined reference to `Json::Value::operator[](int)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(53): error : undefined reference to `Json::Value::asString[abi:cxx11]() const'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(59): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(59): error : undefined reference to `Json::Value::operator[](int)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(59): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(59): error : undefined reference to `Json::Value::operator[](int)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(59): error : undefined reference to `Json::Value::asDouble() const'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(66): error : undefined reference to `Json::Value::operator[](char const*)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(66): error : undefined reference to `Json::Value::operator[](std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(66): error : undefined reference to `Json::Value::operator[](int)'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(66): error : undefined reference to `Json::Value::asDouble() const'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(37): error : undefined reference to `Json::Value::~Value()'
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(37): error : undefined reference to `Json::Value::~Value()'
+collect2 : error : ld returned 1 exit status

@@ -1,3 +1,10 @@
+/* copyright 2020 Universidad Nacional de Colombia,
+ * Laboratorio de Gestión de Sistemas en Tiempo Real
+ *
+ * Licencia,
+ * otorgada a Secretaría de Movilidad de Medellín
+ ****************************************************/
+
 #include "../include/mostro.h"
 
 #include <jsoncpp/json/value.h>
@@ -8,8 +15,6 @@
 #include <fstream>
 #include <iostream>
 #include <unistd.h>
-
-using namespace boost::numeric::ublas;
 
 Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI) {
 	id = xsection_id;
@@ -37,6 +42,8 @@ bool Mostro::parseConfig(std::string conf_path){
     nEntries = json_value["entries"].size();
     nEdges = nEntries - nDrains;
 
+    max_euclid = json_value["max_euclidian"].asDouble();
+
     pDrains.resize(nDrains, nEdges);
     for (int s = 0; s < nDrains; s++) {
         for (int e = 0; e < 3; e++)
@@ -45,7 +52,7 @@ bool Mostro::parseConfig(std::string conf_path){
 
     edges.resize(nEdges);
     for (int e = 0; e < nEdges; e++) {
-        edges(e) = json_value["entries"][e].asString; //revisar
+        edges(e) = json_value["entries"][e].asString(); //revisar
     }
 
     clusters.resize(8,3);
@@ -63,11 +70,12 @@ bool Mostro::parseConfig(std::string conf_path){
     }
 
     if (source == FLEXI) {
-        input_vector.resize(nEdges * 3 + pDrains.size1);
+        input_vector.resize(nEdges * 3 + pDrains.size1(), 1);
     }
     else if (source == ARS) {
-        input_vector.resize(nEdges * 3 + pDrains.size1);
+        input_vector.resize(nEdges * 3 + pDrains.size1(), 1);
     }
+    delete &json_value;
     return true;
 }
  
@@ -75,7 +83,7 @@ std::string Mostro::suggestedPlan(FlexiData flexi_data[]){
     if (isInit)
         goto suggest;
     else
-        return "error: not initialized";
+        return "[infMOSTRO." + id + "]error: not initialized";
 
 suggest:
     if ((sizeof(flexi_data) / sizeof(*flexi_data)) != nEdges) {
@@ -86,9 +94,9 @@ suggest:
         for (int e = 0; e < nEdges; e++) {
             for (int d = 0; d < nEdges; d++) {
                 if (flexi_data[d].edge == edges[e]) {
-                    input_vector(0 * nEdges + e) = flexi_data[d].flow;
-                    input_vector(1 * nEdges + nDrains + e) = flexi_data[d].speed;
-                    input_vector(2 * nEdges + nDrains + e) = flexi_data[d].queue;
+                    input_vector(0 * nEdges + e, 1) = flexi_data[d].flow;
+                    input_vector(1 * nEdges + nDrains + e, 1) = flexi_data[d].speed;
+                    input_vector(2 * nEdges + nDrains + e, 1) = flexi_data[d].queue;
                     break;
                 }
             }
@@ -96,17 +104,17 @@ suggest:
         for (int s = 0; s < nDrains; s++) {
             double s_val = 0.0;
             for (int e = 0; e < 3; e++) {
-                s_val += pDrains(s,e) * input_vector(e); //revisar
+                s_val += pDrains(s,e) * input_vector(e, 1); //revisar
             }
-            input_vector(nEdges + s) = s_val;
+            input_vector(nEdges + s, 1) = s_val;
         }
-        vector<double> aPoint = prod(vh, input_vector);
+        matrix<double> aPoint = prod(vh, input_vector);
         int plan = -1;
         double cdist = 1E10; //parametro de distancia minima admisible
         for (int c = 0; c < 8; c++) {
             vector<double> diff(3);
             for (int d = 0; d < 3; d++) {
-                diff(d) = clusters(c, d) - aPoint(d);
+                diff(d) = clusters(c, d) - aPoint(d, 1);
             }
             double cnorm2 = norm_2(diff);
             if (cnorm2 < cdist) {
@@ -117,7 +125,7 @@ suggest:
         if (plan >= 0)
             return id + ".plan" + std::to_string(plan);
         else
-            return "error: el estado medido de la intersección se aleja demasiado de los estados conocidos.";
+            return "[infMOSTRO." + id + "] error: el estado medido de la intersección se aleja demasiado de los estados conocidos.";
     }
 }
 

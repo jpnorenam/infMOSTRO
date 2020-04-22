@@ -1,0 +1,38 @@
+﻿  Cleaning remote project directory
+  Validating sources
+  Copying sources remotely to '192.168.33.10'
+  Validating architecture
+  Validating architecture
+  Starting remote build
+  Compiling sources:
+  mostro.cpp
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(22,10): warning : variable ‘isInit’ set but not used [-Wunused-but-set-variable]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(22,10): warning :      bool isInit = false;
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(22,10): warning :           ^~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(48,23): warning : comparison between signed and unsigned integer expressions [-Wsign-compare]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(48,23): warning :      for (int s = 0; s < nDrains; s++) {
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(48,23): warning :                      ~~^~~~~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(54,23): warning : comparison between signed and unsigned integer expressions [-Wsign-compare]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(54,23): warning :      for (int e = 0; e < nEdges; e++) {
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(54,23): warning :                      ~~^~~~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(66,27): warning : comparison between signed and unsigned integer expressions [-Wsign-compare]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(66,27): warning :          for (int c = 0; c < nSpace; c++) {
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(66,27): warning :                          ~~^~~~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(89,27): warning : ‘sizeof’ on array function parameter ‘flexi_data’ will return size of ‘FlexiData*’ [-Wsizeof-array-argument]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(89,27): warning :      if ((sizeof(flexi_data) / sizeof(*flexi_data)) != nEdges) {
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(89,27): warning :                            ^
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(82,56): message : declared here
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(94,27): warning : comparison between signed and unsigned integer expressions [-Wsign-compare]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(94,27): warning :          for (int e = 0; e < nEdges; e++) {
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(94,27): warning :                          ~~^~~~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(95,31): warning : comparison between signed and unsigned integer expressions [-Wsign-compare]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(95,31): warning :              for (int d = 0; d < nEdges; d++) {
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(95,31): warning :                              ~~^~~~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(104,27): warning : comparison between signed and unsigned integer expressions [-Wsign-compare]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(104,27): warning :          for (int s = 0; s < nDrains; s++) {
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(104,27): warning :                          ~~^~~~~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(134,1): warning : no return statement in function returning non-void [-Wreturn-type]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(134,1): warning :  }
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(134,1): warning :  ^
+  Archiving objects
+  infMOSTRO.vcxproj -> D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\build\libinfMOSTRO.a

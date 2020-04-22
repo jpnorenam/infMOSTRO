@@ -1,7 +1,16 @@
+/* copyright 2020 Universidad Nacional de Colombia,
+ * Laboratorio de Gestión de Sistemas en Tiempo Real
+ *
+ * Licencia,
+ * otorgada a Secretaría de Movilidad de Medellín
+ ****************************************************/
+
 #include "interfaces.h"
 #include <string>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
+
+using namespace boost::numeric::ublas;
 
 const std::string MOSTRO_HOME = std::getenv("MOSTRO_HOME");
 
@@ -12,10 +21,11 @@ private:
     std::string cPath;
     bool isInit;
 
+    double max_euclid;
     uint nEdges, nArs, nEntries, nDrains, nSpace;
     vector<std::string> edges;
-    matrix<double> pDrains, clusters, vh;
-    vector<double> input_vector;
+    matrix<double> pDrains, clusters;
+    matrix<double> vh, input_vector;
 
 public: 
     Mostro(std::string xsection_id, DataSource data_source);

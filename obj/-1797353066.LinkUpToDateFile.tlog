@@ -1,0 +1,1 @@
+ar -rsc  "/home/vagrant/infMOSTRO/build/libinfMOSTRO.a" /home/vagrant/infMOSTRO/obj/mostro.o
