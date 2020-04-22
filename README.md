@@ -6,7 +6,7 @@
 `sudo apt install gcc g++ make cmake pkg-config`\
 `sudo apt libjsoncpp-dev libboost-math-dev`
 
-### Compilación de la libreria
+### Compilación de la librería
 
 `mkdir build | cd build`\
 `cmake ..`\
