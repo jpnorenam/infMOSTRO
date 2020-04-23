@@ -12,7 +12,8 @@
 
 using namespace boost::numeric::ublas;
 
-const std::string MOSTRO_HOME = std::getenv("MOSTRO_HOME");
+const std::string MOSTRO_HOME = "/vagrant/infMOSTRO/data";
+//const std::string MOSTRO_HOME = std::getenv("MOSTRO_HOME");
 
 class Mostro { 
 private:
@@ -22,16 +23,16 @@ private:
     bool isInit;
 
     double max_euclid;
-    uint nEdges, nArs, nEntries, nDrains, nSpace;
+    uint nEdges, nArs, nEntries, nSinks, nSpace;
     vector<std::string> edges;
-    matrix<double> pDrains, clusters;
+    matrix<double> pSinks, clusters;
     matrix<double> vh, input_vector;
 
 public: 
     Mostro(std::string xsection_id, DataSource data_source);
     bool parseConfig(std::string conf_path);
-    std::string suggestedPlan(FlexiData flexi_data[]);
-    std::string suggestedPlan(ArsData flexi_data[]);
+    std::string suggestedPlan(FlexiData flexi_data[], uint dsize);
+    //std::string suggestedPlan(ArsData flexi_data[], uint dsize);
 };
 
 

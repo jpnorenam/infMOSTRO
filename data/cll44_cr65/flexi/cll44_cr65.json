@@ -1,12 +1,12 @@
 {
   "id": "cl44_cr65",
-  "order": [
-    "Carrera_65_N-f-ENT",
-    "Av_San_Juan_Oriente-f-ENT",
-    "Av_San_Juan_Occidente-f-ENT",
-    "Av_San_Juan_Oriente-f-SAL",
-    "Av_San_Juan_Occidente-f-SAL",
-    "Carrera_65_N-f-SAL"
+  "edges": [
+    "Carrera 65 >(N)",
+	"Av. San Juan >Oriente",
+	"Av. San Juan >Occidente",
+	"Av. San Juan >Oriente",
+	"Av. San Juan >Occidente",
+	"Carrera 65 >(N)"
   ],
   "flexi": 1,
   "entries": {
@@ -17,7 +17,7 @@
     "Av_San_Juan_Occidente-f-SAL": "Av. San Juan >Occidente",
     "Carrera_65_N-f-SAL": "Carrera 65 >(N)"
   },
-  "drains": [
+  "sinks": [
     [ 0.00, 1.00, 0.00 ],
     [ 0.45, 0.00, 0.55 ],
     [ 0.36, 0.21, 0.43 ]

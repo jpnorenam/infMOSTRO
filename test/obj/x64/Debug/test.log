@@ -1,0 +1,18 @@
+﻿  Validating sources
+  Copying sources remotely to '192.168.33.10'
+  Validating architecture
+  Validating architecture
+  Starting remote build
+  Compiling sources:
+  main.cpp
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(5,98): warning : ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(5,98): warning :      FlexiData flexi_data1 = { .edge = "Carrera 65 >(N)", .flow = 65.0, .speed = 8.5, .queue = 90 };
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(5,98): warning :                                                                                                   ^
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(6,106): warning : ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(6,106): warning :      FlexiData flexi_data2 = { .edge = "Av. San Juan >Oriente", .flow = 70.0, .speed = 16.0, .queue = 110 };
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(6,106): warning :                                                                                                           ^
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(7,109): warning : ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(7,109): warning :      FlexiData flexi_data3 = { .edge = "Av. San Juan >Occidente", .flow = 100.0, .speed = 20.8, .queue = 360 };
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(7,109): warning :                                                                                                              ^
+  Linking objects
+  test.vcxproj -> D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\bin\x64\Debug\test.out

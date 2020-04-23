@@ -1,1 +1,1 @@
-ar -rsc  "/home/vagrant/infMOSTRO/build/libinfMOSTRO.a" /home/vagrant/infMOSTRO/obj/mostro.o
+g++ -o "/home/vagrant/infMOSTRO/build/libinfMOSTRO.so" -Wl,--no-undefined -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -shared /home/vagrant/infMOSTRO/obj/mostro.o -ljsoncpp

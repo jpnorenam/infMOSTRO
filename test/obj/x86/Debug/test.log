@@ -1,0 +1,20 @@
+﻿  Cleaning remote project directory
+  Validating sources
+  Copying sources remotely to '192.168.33.10'
+  Validating architecture
+  Validating architecture
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Application Type\Linux\1.0\Linux.targets(188,5): warning : Current project architecture 'x86' is incompatible with the remote system architecture 'x64' ('x64'). Please switch the project architecture to 'x64' in Configuration Manager.
+  Starting remote build
+  Compiling sources:
+  main.cpp
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(5,98): warning : ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(5,98): warning :      FlexiData flexi_data1 = { .edge = "Carrera 65 >(N)", .flow = 53.0, .speed = 8.5, .queue = 90 };
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(5,98): warning :                                                                                                   ^
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(6,106): warning : ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(6,106): warning :      FlexiData flexi_data2 = { .edge = "Av. San Juan >Oriente", .flow = 55.0, .speed = 16.0, .queue = 110 };
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(6,106): warning :                                                                                                           ^
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(7,108): warning : ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(7,108): warning :      FlexiData flexi_data3 = { .edge = "Av. San Juan >Occidente", .flow = 80.0, .speed = 20.8, .queue = 360 };
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\main.cpp(7,108): warning :                                                                                                             ^
+  Linking objects
+  test.vcxproj -> D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\test\bin\x86\Debug\test.out

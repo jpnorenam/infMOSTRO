@@ -37,84 +37,83 @@ bool Mostro::parseConfig(std::string conf_path){
     Json::Value json_value;
     jsonf >> json_value;
 
-    nSpace = json_value["singular_vectors"]["sv0"].size();
-    nDrains = json_value["drains"].size();
-    nEntries = json_value["entries"].size();
-    nEdges = nEntries - nDrains;
+    nSpace = json_value["singular_vectors"][0]["sv1"].size();
+    nSinks = json_value["sinks"].size();
+    nEntries = json_value["edges"].size();
+    nEdges = nEntries - nSinks;
 
     max_euclid = json_value["max_euclidian"].asDouble();
 
-    pDrains.resize(nDrains, nEdges);
-    for (int s = 0; s < nDrains; s++) {
-        for (int e = 0; e < 3; e++)
-            pDrains(s,e) = json_value["drains"][s][e].asDouble(); //revisar
+    pSinks.resize(nSinks, nEdges);
+    for (uint s = 0; s < nSinks; s++) {
+        for (uint e = 0; e < 3; e++)
+            pSinks(s,e) = json_value["sinks"][s][e].asDouble(); //revisar
     }
 
     edges.resize(nEdges);
-    for (int e = 0; e < nEdges; e++) {
-        edges(e) = json_value["entries"][e].asString(); //revisar
+    for (uint e = 0; e < nEdges; e++) {
+        edges(e) = json_value["edges"][e].asString(); //revisar
     }
 
     clusters.resize(8,3);
-    for (int c = 0; c < 8; c++) {
-        for (int d = 0; d < 3; d++)
+    for (uint c = 0; c < 8; c++) {
+        for (uint d = 0; d < 3; d++)
             clusters(c,d) = json_value["clusters"][c]["centroid"][d].asDouble();
     }
 
     vh.resize(3, nSpace);
-    for (int d = 0; d < 3; d++) {
-        for (int c = 0; c < nSpace; c++) {
-            std::string sv = "sv" + std::to_string(d);
-            vh(d,c) = json_value["singular_vectors"][sv][c].asDouble();
+    for (uint d = 0; d < 3; d++) {
+        for (uint c = 0; c < nSpace; c++) {
+            std::string sv = "sv" + std::to_string(d+1);
+            vh(d,c) = json_value["singular_vectors"][0][sv][c].asDouble();
         }
     }
 
     if (source == FLEXI) {
-        input_vector.resize(nEdges * 3 + pDrains.size1(), 1);
+        input_vector.resize(nEdges * 3 + pSinks.size1(), 1);
     }
     else if (source == ARS) {
-        input_vector.resize(nEdges * 3 + pDrains.size1(), 1);
+        input_vector.resize(nEdges * 3 + pSinks.size1(), 1);
     }
-    delete &json_value;
     return true;
 }
  
-std::string Mostro::suggestedPlan(FlexiData flexi_data[]){
+std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     if (isInit)
         goto suggest;
     else
         return "[infMOSTRO." + id + "]error: not initialized";
 
 suggest:
-    if ((sizeof(flexi_data) / sizeof(*flexi_data)) != nEdges) {
+    if (dsize != nEdges) {
         std::cout << "[infMOSTRO." + id + "] datos provenientes de " + std::to_string(source) + " están incompletos.";
         return "error: " + std::to_string(source) + "_data";
     }
     else {
-        for (int e = 0; e < nEdges; e++) {
-            for (int d = 0; d < nEdges; d++) {
+        for (uint e = 0; e < nEdges; e++) {
+            for (uint d = 0; d < nEdges; d++) {
                 if (flexi_data[d].edge == edges[e]) {
-                    input_vector(0 * nEdges + e, 1) = flexi_data[d].flow;
-                    input_vector(1 * nEdges + nDrains + e, 1) = flexi_data[d].speed;
-                    input_vector(2 * nEdges + nDrains + e, 1) = flexi_data[d].queue;
+                    input_vector(0 * nEdges + e, 0) = flexi_data[d].flow;
+                    input_vector(1 * nEdges + nSinks + e, 0) = flexi_data[d].speed;
+                    input_vector(2 * nEdges + nSinks + e, 0) = flexi_data[d].queue;
                     break;
                 }
             }
         }
-        for (int s = 0; s < nDrains; s++) {
+        for (uint s = 0; s < nSinks; s++) {
             double s_val = 0.0;
-            for (int e = 0; e < 3; e++) {
-                s_val += pDrains(s,e) * input_vector(e, 1); //revisar
+            for (uint e = 0; e < 3; e++) {
+                s_val += pSinks(s,e) * input_vector(e, 0); //revisar
             }
-            input_vector(nEdges + s, 1) = s_val;
+            input_vector(nEdges + s, 0) = s_val;
         }
         matrix<double> aPoint = prod(vh, input_vector);
         int plan = -1;
         double cdist = 1E10; //parametro de distancia minima admisible
-        for (int c = 0; c < 8; c++) {
+        for (uint c = 0; c < 8; c++) {
             vector<double> diff(3);
             for (int d = 0; d < 3; d++) {
-                diff(d) = clusters(c, d) - aPoint(d, 1);
+                diff(d) = clusters(c, d) - aPoint(d, 0);
             }
             double cnorm2 = norm_2(diff);
             if (cnorm2 < cdist) {
@@ -129,6 +128,6 @@ suggest:
     }
 }
 
-std::string Mostro::suggestedPlan(ArsData ars_data[]) {
-
-}
+//std::string Mostro::suggestedPlan(ArsData ars_data[]) {
+//    return "";
+//}
