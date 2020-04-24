@@ -42,4 +42,4 @@ obj/
 *.vcxproj.user
 
 #Vagrant logs
-.log
+*.log
