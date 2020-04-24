@@ -7,13 +7,13 @@
 set(INFMOSTRO_SRC
     mostro.cpp
 )
-
 list(APPEND INFMOSTRO_INCLUDE_DIRS
-    ${Jsoncpp_INCLUDE_DIRS}
-    ${Boost_INCLUDE_DIRS}
     ${PROJECT_SOURCE_DIR}/include
 )
-
+list(APPEND LIBRARIES_INCLUDE_DIRS
+    ${Jsoncpp_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}
+)
 set(INFMOSTRO_LIBRARIES
     jsoncpp
     stdc++
@@ -25,7 +25,7 @@ endif()
 
 add_library(infmostro SHARED ${INFMOSTRO_SRC})
 target_link_libraries(infmostro PUBLIC ${INFMOSTRO_LIBRARIES})# -Wl,--whole-archive ${WHOLE_ARCHIVES} -Wl,--no-whole-archive)
-target_include_directories(infmostro PUBLIC ${INFMOSTRO_INCLUDE_DIRS})
+target_include_directories(infmostro PUBLIC ${INFMOSTRO_INCLUDE_DIRS} ${LIBRARIES_INCLUDE_DIRS})
 target_compile_options(infmostro PUBLIC ${INFMOSTRO_CXX_FLAGS})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
@@ -38,5 +38,6 @@ set_target_properties(infmostro PROPERTIES
 install(TARGETS infmostro
 	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
