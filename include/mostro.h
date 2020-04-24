@@ -23,14 +23,16 @@ private:
     bool isInit;
 
     double max_euclid;
-    uint nEdges, nArs, nEntries, nSinks, nSpace;
+    uint nEdges, nArs, nSinks, nSpace;
+    uint nIgnoreS, nIgnoreQ;
     vector<std::string> edges;
+    std::vector<std::string> sIgnoreS, sIgnoreQ;
     matrix<double> pSinks, clusters;
     matrix<double> vh, input_vector;
+    bool parseConfig(std::string conf_path);
 
 public: 
     Mostro(std::string xsection_id, DataSource data_source);
-    bool parseConfig(std::string conf_path);
     std::string suggestedPlan(FlexiData flexi_data[], uint dsize);
     //std::string suggestedPlan(ArsData flexi_data[], uint dsize);
 };

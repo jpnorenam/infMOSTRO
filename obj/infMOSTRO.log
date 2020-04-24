@@ -6,8 +6,8 @@
   Starting remote build
   Compiling sources:
   mostro.cpp
-D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(22,10): warning : variable ‘isInit’ set but not used [-Wunused-but-set-variable]
-D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(22,10): warning :      bool isInit = false;
-D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(22,10): warning :           ^~~~~~
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(23,10): warning : variable ‘isInit’ set but not used [-Wunused-but-set-variable]
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(23,10): warning :      bool isInit = false;
+D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\src\mostro.cpp(23,10): warning :           ^~~~~~
   Linking objects
   infMOSTRO.vcxproj -> D:\Projects_\movilidad_2019\infMOSTRO\deployment\infMOSTRO\build\libinfMOSTRO.so
