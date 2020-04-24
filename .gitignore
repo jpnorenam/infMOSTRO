@@ -40,3 +40,6 @@ obj/
 *.sln
 *.vcxproj
 *.vcxproj.user
+
+#Vagrant logs
+.log
