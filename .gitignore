@@ -37,6 +37,7 @@ build/
 # Visual Studio
 .vs/
 obj/
+bin/
 *.sln
 *.vcxproj
 *.vcxproj.user
