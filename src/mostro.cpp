@@ -54,9 +54,8 @@ bool Mostro::parseConfig(std::string conf_path){
     }
 
     edges.resize(nEdges);
-    for (uint e = 0; e < nEdges; e++) {
+    for (uint e = 0; e < nEdges; e++)
         edges(e) = json_value["edges"][e].asString(); //revisar
-    }
 
     clusters.resize(8,3);
     for (uint c = 0; c < 8; c++) {
@@ -134,6 +133,6 @@ suggest:
     }
 }
 
-//std::string Mostro::suggestedPlan(ArsData ars_data[]) {
-//    return "";
-//}
+// std::string Mostro::suggestedPlan(ArsData ars_data[]) {
+//     return "";
+// }
