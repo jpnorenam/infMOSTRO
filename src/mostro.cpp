@@ -5,7 +5,7 @@
  * otorgada a Secretaría de Movilidad de Medellín
  ****************************************************/
 
-#include "../include/mostro.h"
+#include <infmostro/mostro.h>
 
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/json.h>

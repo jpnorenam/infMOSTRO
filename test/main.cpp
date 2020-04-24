@@ -1,4 +1,4 @@
-#include "../include/mostro.h"
+#include <infmostro/mostro.h>
 
 int main()
 {
