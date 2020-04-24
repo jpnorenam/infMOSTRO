@@ -1,13 +1,19 @@
-include(FindPackageHandleStandardArgs)
-
-find_path(BOOST_INCLUDE_DIR
-	NAMES boost_version.h
+find_path(Boost_INCLUDE_DIR
+	NAMES numeric/ublas/blas.hpp
 	PATH_SUFFIXES boost
+	PATHS ${Boost_PKGCONF_INCLUDE_DIRS}
 )
 
-find_library(BOOST_LIBRARY NAMES boost)
+find_library(Boost_LIBRARY
+	NAMES boost_math_c99
+)
 
-# handle the QUIETLY and REQUIRED arguments and set SUNDIALS_FOUND to TRUE
-# if all listed variables are TRUE
-find_package_handle_standard_args(Boost DEFAULT_MSG BOOST_LIBRARY BOOST_INCLUDE_DIR)
-mark_as_advanced(BOOST_INCLUDE_DIR)
+include(FindPackageHandleStandardArgs)
+
+find_package_handle_standard_args(Boost DEFAULT_MSG
+    Boost_LIBRARY Boost_INCLUDE_DIR)
+
+mark_as_advanced(Boost_INCLUDE_DIR Boost_LIBRARY)
+
+set(Boost_LIBRARIES ${Boost_LIBRARY})
+set(Boost_INCLUDE_DIRS ${Boost_INCLUDE_DIR})

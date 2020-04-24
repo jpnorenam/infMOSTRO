@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/vagrant/infMOSTRO/include/interfaces.h
+
+/vagrant/infMOSTRO/include/mostro.h
+interfaces.h
+/vagrant/infMOSTRO/include/interfaces.h
+string
+-
+boost/numeric/ublas/matrix.hpp
+-
+boost/numeric/ublas/vector.hpp
+-
+
+/vagrant/infMOSTRO/src/mostro.cpp
+../include/mostro.h
+/vagrant/infMOSTRO/include/mostro.h
+jsoncpp/json/value.h
+-
+jsoncpp/json/json.h
+-
+boost/numeric/ublas/matrix.hpp
+-
+boost/numeric/ublas/vector.hpp
+-
+fstream
+-
+iostream
+-
+algorithm
+-
+unistd.h
+-
+

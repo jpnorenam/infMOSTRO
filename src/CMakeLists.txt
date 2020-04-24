@@ -1,0 +1,42 @@
+# copyright 2020 Universidad Nacional de Colombia,
+# Laboratorio de Gestión de Sistemas en Tiempo Real
+# 
+# Licencia,
+# otorgada a Secretaría de Movilidad de Medellín
+###################################################################################
+set(INFMOSTRO_SRC
+    mostro.cpp
+)
+
+list(APPEND INFMOSTRO_INCLUDE_DIRS
+    ${Jsoncpp_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}
+    ${PROJECT_SOURCE_DIR}/include
+)
+
+set(INFMOSTRO_LIBRARIES
+    jsoncpp
+    stdc++
+)
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL GNU)
+	list(APPEND INFMOSTRO_LIBRARIES "-lstdc++fs")
+endif()
+
+add_library(infmostro SHARED ${INFMOSTRO_SRC})
+target_link_libraries(infmostro PUBLIC ${INFMOSTRO_LIBRARIES})# -Wl,--whole-archive ${WHOLE_ARCHIVES} -Wl,--no-whole-archive)
+target_include_directories(infmostro PUBLIC ${INFMOSTRO_INCLUDE_DIRS})
+target_compile_options(infmostro PUBLIC ${INFMOSTRO_CXX_FLAGS})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
+set_target_properties(infmostro PROPERTIES
+    VERSION ${CMAKE_PROJECT_VERSION}
+    SOVERSION 1
+)
+
+install(TARGETS infmostro
+	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

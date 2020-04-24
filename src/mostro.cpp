@@ -20,7 +20,7 @@
 Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI) {
 	id = xsection_id;
     source = data_source;
-    bool isInit = false;
+    isInit = false;
 
     if(source == FLEXI)
         cPath = MOSTRO_HOME + "/" + id + "/flexi/" + id + ".json";
