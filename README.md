@@ -7,11 +7,11 @@
 `sudo apt libjsoncpp-dev libboost-math-dev`
 
 ### Compilación de la librería
-
+`git clone git@github.com:jpnorenam/infMOSTRO.git`\
 `mkdir build | cd build`\
 `cmake ..`\
 `make -j $(nproc)`\
-`sudo make -j install`\
+`sudo make install`\
 `ldconfig`
 
 ## Contacto
