@@ -11,7 +11,6 @@
 #include <jsoncpp/json/json.h>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
-
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -42,6 +41,7 @@ bool Mostro::parseConfig(std::string conf_path){
     nSinks = json_value["sinks"].size();
     nEdges = json_value["edges"].size();
 
+    nIgnoreF = json_value["ignore"]["flow"].size();
     nIgnoreS = json_value["ignore"]["speed"].size();
     nIgnoreQ = json_value["ignore"]["queue"].size();
 
@@ -50,12 +50,12 @@ bool Mostro::parseConfig(std::string conf_path){
     pSinks.resize(nSinks, nEdges);
     for (uint s = 0; s < nSinks; s++) {
         for (uint e = 0; e < nEdges; e++)
-            pSinks(s,e) = json_value["sinks"][s][e].asDouble(); //revisar
+            pSinks(s,e) = json_value["sinks"][s][e].asDouble();
     }
 
     edges.resize(nEdges);
     for (uint e = 0; e < nEdges; e++)
-        edges(e) = json_value["edges"][e].asString(); //revisar
+        edges(e) = json_value["edges"][e].asString();
 
     clusters.resize(8,3);
     for (uint c = 0; c < 8; c++) {
@@ -69,16 +69,18 @@ bool Mostro::parseConfig(std::string conf_path){
             vh(c,d) = json_value["singular_vectors"][d][c].asDouble();
     }
 
+    for (uint i = 0; i < nIgnoreF; i++)
+        sIgnoreF.push_back(json_value["ignore"]["flow"][i].asString());
     for (uint i = 0; i < nIgnoreS; i++)
         sIgnoreS.push_back(json_value["ignore"]["speed"][i].asString());
     for (uint i = 0; i < nIgnoreQ; i++)
         sIgnoreQ.push_back(json_value["ignore"]["queue"][i].asString());
 
-    int nIgnore = nIgnoreS + nIgnoreQ;
+    int nIgnore = nIgnoreF + nIgnoreS + nIgnoreQ;
     if (source == FLEXI)
         input_vector.resize(1, nEdges * 3 + pSinks.size1() - nIgnore);
     else if (source == ARS)
-        input_vector.resize(1, nEdges * 3 + pSinks.size1() - nIgnore);
+        input_vector.resize(1, nEdges * 2 - nIgnore);
 
     return true;
 }
@@ -110,7 +112,7 @@ suggest:
         for (uint s = 0; s < nSinks; s++) {
             double s_val = 0.0;
             for (uint e = 0; e < nEdges; e++)
-                s_val += pSinks(s,e) * input_vector(0, e); //revisar
+                s_val += pSinks(s,e) * input_vector(0, e);
             input_vector(0, nEdges + s) = s_val;
         }
         matrix<double> aPoint = prod(input_vector, vh); //vh is unitary vh.T = vh^-1
@@ -129,10 +131,50 @@ suggest:
         if (plan >= 0)
             return id + ".plan" + std::to_string(plan);
         else
-            return "[infMOSTRO." + id + "] error: el estado estimado de la intersección se aleja demasiado de los estados conocidos.";
+            return "[infMOSTRO." + id + "] error: el estado estimado de la intersección se aleja demasiado de los estados históricos.";
     }
 }
 
-// std::string Mostro::suggestedPlan(ArsData ars_data[]) {
-//     return "";
-// }
+std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
+
+    if (isInit)
+        goto suggest;
+    else
+        return "[infMOSTRO." + id + "]error: no fue inicializado correctamente.";
+
+suggest:
+    if (dsize != nEdges) {
+        std::cout << "[infMOSTRO." + id + "] datos provenientes de " + std::to_string(source) + " están incompletos.";
+        return "error: " + std::to_string(source) + "_data";
+    }
+    else {
+        for (uint e = 0; e < nEdges; e++) {
+            for (uint d = 0; d < nEdges; d++) {
+                if (ars_data[d].id == edges[e]) {
+                    if (std::find(sIgnoreF.begin(), sIgnoreF.end(), edges[e]) == sIgnoreF.end())
+                        input_vector(0, e) = ars_data[d].flow1 + 2.0 * ars_data[d].flow2 + 2.5 * ars_data[d].flow3;
+                    if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end())
+                        input_vector(0, nEdges - nIgnoreF + e) = ars_data[d].speed;
+                    break;
+                }
+            }
+        }
+        matrix<double> aPoint = prod(input_vector, vh); //vh is unitary vh.T = vh^-1
+        int plan = -1;
+        double cdist = max_euclid;
+        for (uint c = 0; c < 8; c++) {
+            vector<double> diff(3);
+            for (int d = 0; d < 3; d++)
+                diff(d) = clusters(c, d) - aPoint(0, d);
+            double cnorm2 = norm_2(diff);
+            if (cnorm2 < cdist) {
+                cdist = cnorm2;
+                plan = c;
+            }
+        }
+        if (plan >= 0)
+            return id + ".plan" + std::to_string(plan);
+        else
+            return "[infMOSTRO." + id + "] error: el estado estimado de la intersección se aleja demasiado de los estados históricos.";
+    }
+}

@@ -24,9 +24,9 @@ private:
 
     double max_euclid;
     uint nEdges, nArs, nSinks, nSpace;
-    uint nIgnoreS, nIgnoreQ;
+    uint nIgnoreF, nIgnoreS, nIgnoreQ;
     vector<std::string> edges;
-    std::vector<std::string> sIgnoreS, sIgnoreQ;
+    std::vector<std::string> sIgnoreF, sIgnoreS, sIgnoreQ;
     matrix<double> pSinks, clusters;
     matrix<double> vh, input_vector;
     bool parseConfig(std::string conf_path);
@@ -34,7 +34,7 @@ private:
 public: 
     Mostro(std::string xsection_id, DataSource data_source);
     std::string suggestedPlan(FlexiData flexi_data[], uint dsize);
-    // std::string suggestedPlan(ArsData flexi_data[], uint dsize);
+    std::string suggestedPlan(ArsData ars_data[], uint dsize);
 };
 
 

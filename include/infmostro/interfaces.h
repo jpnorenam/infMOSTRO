@@ -15,7 +15,7 @@ struct FlexiData {
 };
 
 struct ArsData {
-    char* ars_id;
+    char* id;
     double flow1, flow2, flow3;
     double speed;
 };
