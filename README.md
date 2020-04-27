@@ -8,7 +8,8 @@
 
 ### Compilación de la librería
 `git clone git@github.com:jpnorenam/infMOSTRO.git`\
-`mkdir build | cd build`\
+`cd infMOSTRO`\
+`mkdir build && cd build`\
 `cmake ..`\
 `make -j $(nproc)`\
 `sudo make install`\
