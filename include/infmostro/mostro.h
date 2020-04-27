@@ -23,6 +23,7 @@ private:
     bool isInit;
 
     double max_euclid;
+    uint nClusters;
     uint nEdges, nArs, nSinks, nSpace;
     uint nIgnoreF, nIgnoreS, nIgnoreQ;
     vector<std::string> edges;

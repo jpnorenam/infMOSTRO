@@ -11,7 +11,7 @@ set(PROJECT_VCS_URL "https://github.com/jpnorenam/infMOSTRO")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_THREAD_PREFER_PTHREAD ON)
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(TOPLEVEL_PROJECT ON)
@@ -33,7 +33,7 @@ add_compile_options(-Wall -Werror -fdiagnostics-color=auto)
 find_package(jsoncpp REQUIRED)
 find_package(Boost REQUIRED)
 
-set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/local/share/pkgconfig:/usr/lib64/pkgconfig")
+set(ENV{PKG_CONFIG_PATH} $ENV{PKG_CONFIG_PATH}:/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/local/share/pkgconfig:/usr/lib64/pkgconfig)
 
 cmake_dependent_option(WITH_TESTS           "Run tests"                                             ON "TOPLEVEL_PROJECT" OFF)
 
