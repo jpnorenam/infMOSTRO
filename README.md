@@ -14,7 +14,13 @@
 `sudo make install`\
 `ldconfig`
 
+## Copyright
+
+2020, Laboratorio de Gestión de Sistemas en Tiempo Real, Facultad de Minas, Universidad Nacional de Colombia
+
 ## Contacto
+
+[![LGSTR Logo](doc/LGSTR_logo.png)](https://sites.google.com/unal.edu.co/lab-gstr/)
 
 - Juan Pablo Noreña <jpnorenam@unal.edu.co>
 - Andrés Felipe Acosta <afacostag@unal.edu.co>
