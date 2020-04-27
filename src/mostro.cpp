@@ -22,9 +22,9 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
     isInit = false;
 
     if(source == FLEXI)
-        cPath = MOSTRO_HOME + "/" + id + "/flexi/" + id + ".json";
+        cPath = INFMOSTRO_HOME + "/" + id + "/flexi/" + id + ".json";
     else if(source == ARS)
-        cPath = MOSTRO_HOME + "/" + id + "/ars/" + id + ".json";
+        cPath = INFMOSTRO_HOME + "/" + id + "/ars/" + id + ".json";
 
     if(access(cPath.c_str(), F_OK) != -1)
         isInit = parseConfig(cPath);
@@ -89,11 +89,11 @@ std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     if (isInit)
         goto suggest;
     else
-        return "[infMOSTRO." + id + "]error: no fue inicializado correctamente.";
+        return "[infMOSTRO." + id + ".flexi] error: no fue inicializado correctamente.";
 
 suggest:
     if (dsize != nEdges) {
-        std::cout << "[infMOSTRO." + id + "] datos provenientes de " + std::to_string(source) + " están incompletos.";
+        std::cout << "[infMOSTRO." + id + ".flexi] error: los datos provenientes de " + std::to_string(source) + " están incompletos.";
         return "error: " + std::to_string(source) + "_data";
     }
     else {
@@ -129,9 +129,9 @@ suggest:
             }   
         }
         if (plan >= 0)
-            return id + ".plan" + std::to_string(plan);
+            return id + ".flexi.plan" + std::to_string(plan);
         else
-            return "[infMOSTRO." + id + "] error: el estado estimado de la intersección se aleja demasiado de los estados históricos.";
+            return "[infMOSTRO." + id + ".flexi] advertencia: el estado estimado de la intersección se aleja demasiado de los estados históricos.";
     }
 }
 
@@ -140,11 +140,11 @@ std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     if (isInit)
         goto suggest;
     else
-        return "[infMOSTRO." + id + "]error: no fue inicializado correctamente.";
+        return "[infMOSTRO." + id + ".ars] error: no fue inicializado correctamente.";
 
 suggest:
     if (dsize != nEdges) {
-        std::cout << "[infMOSTRO." + id + "] datos provenientes de " + std::to_string(source) + " están incompletos.";
+        std::cout << "[infMOSTRO." + id + ".ars] error: los datos provenientes de " + std::to_string(source) + " están incompletos.";
         return "error: " + std::to_string(source) + "_data";
     }
     else {
@@ -173,8 +173,8 @@ suggest:
             }
         }
         if (plan >= 0)
-            return id + ".plan" + std::to_string(plan);
+            return id + ".ars.plan" + std::to_string(plan);
         else
-            return "[infMOSTRO." + id + "] error: el estado estimado de la intersección se aleja demasiado de los estados históricos.";
+            return "[infMOSTRO." + id + ".ars] advertencia: el estado medido de la intersección se aleja demasiado de los estados históricos.";
     }
 }
