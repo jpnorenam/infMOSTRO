@@ -15,6 +15,11 @@
 `sudo make install`\
 `ldconfig`
 
+### Añadir variable de entorno
+
+`echo "export INFMOSTRO_HOME=/usr/local/etc/infmostro" >> ~/.bash_profile`\
+`source ~/.bashrc`
+
 ## Copyright
 
 2020, Laboratorio de Gestión de Sistemas en Tiempo Real, Facultad de Minas, Universidad Nacional de Colombia
