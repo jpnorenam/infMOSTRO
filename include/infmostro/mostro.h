@@ -13,8 +13,11 @@
 
 using namespace boost::numeric::ublas;
 
-const std::string INFMOSTRO_HOME = "/vagrant/infMOSTRO/data/infmostro"; //for degugging
-//const std::string INFMOSTRO_HOME = std::getenv("INFMOSTRO_HOME");
+#ifdef DEBUG
+const std::string INFMOSTRO_HOME = "/vagrant/infMOSTRO/data/infmostro";
+#else
+const std::string INFMOSTRO_HOME = std::getenv("INFMOSTRO_HOME");
+#endif
 
 class Mostro { 
 private:
