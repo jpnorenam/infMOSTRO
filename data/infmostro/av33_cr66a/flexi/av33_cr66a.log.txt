@@ -1,0 +1,2 @@
+*** [17:26:44] [infMOSTRO.av33_cr66a] /vagrant/infMOSTRO/data/infmostro/av33_cr66a/flexi/av33_cr66a.json was correctly initialized. ***
+*** [17:26:44] [infMOSTRO.av33_cr66a.flexi] recommends plan3 ***

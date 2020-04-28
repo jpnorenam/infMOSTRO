@@ -16,11 +16,11 @@
 #include <unistd.h>
 
 Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI) {
-    spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + "] %v ***");
 	id = xsection_id;
     source = data_source;
     isInit = false;
-    xsection_console = spdlog::stdout_color_mt("console");
+    xsection_console = spdlog::stdout_color_mt(id+".console");
+    spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + "] %v ***");
     xsection_console->info("initializing infMOSTRO.");
 
     if (source == FLEXI) {
@@ -34,7 +34,8 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
 
     if (access(cFile.c_str(), F_OK) != -1) {
         isInit = parseConfig(cFile);
-        xsection_logger = spdlog::basic_logger_mt("basic_logger", cPath + "log.txt");
+        xsection_logger = spdlog::basic_logger_mt(id + ".logger", cPath + id + ".log.txt");
+        xsection_console->info(cFile + " was correctly initialized.");
         xsection_logger->info(cFile + " was correctly initialized.");
     }
     else

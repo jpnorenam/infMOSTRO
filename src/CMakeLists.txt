@@ -17,6 +17,7 @@ list(APPEND LIBRARIES_INCLUDE_DIRS
 set(INFMOSTRO_LIBRARIES
     jsoncpp
     spdlog::spdlog
+    pthread
     stdc++
 )
 

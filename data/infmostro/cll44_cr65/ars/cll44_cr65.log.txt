@@ -1,0 +1,2 @@
+*** [17:26:44] [infMOSTRO.cll44_cr65] /vagrant/infMOSTRO/data/infmostro/cll44_cr65/ars/cll44_cr65.json was correctly initialized. ***
+*** [17:26:44] [infMOSTRO.cll44_cr65.ars] recommends plan7 ***
