@@ -5,7 +5,6 @@
 ### Dependencias
 `sudo apt install gcc g++ make cmake pkg-config`\
 `sudo apt libjsoncpp-dev libboost-math-dev libspdlog-dev`\
-`sudo apt apache2`
 
 ### Compilación de la librería
 `git clone git@github.com:jpnorenam/infMOSTRO.git`\
