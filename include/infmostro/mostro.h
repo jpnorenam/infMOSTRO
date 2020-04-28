@@ -9,28 +9,26 @@
 #include <string>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
+#include <spdlog/spdlog.h>
 
 using namespace boost::numeric::ublas;
 
-//const std::string INFMOSTRO_HOME = "/vagrant/infMOSTRO/data/infmostro"; //for degugging
-const std::string INFMOSTRO_HOME = std::getenv("INFMOSTRO_HOME");
+const std::string INFMOSTRO_HOME = "/vagrant/infMOSTRO/data/infmostro"; //for degugging
+//const std::string INFMOSTRO_HOME = std::getenv("INFMOSTRO_HOME");
 
 class Mostro { 
 private:
-    std::string id;
-    DataSource source;
-    std::string cPath;
     bool isInit;
-
+    std::string id, cPath, cFile;
+    DataSource source;
     double max_euclid;
-    uint nClusters;
-    uint nEdges, nArs, nSinks, nSpace;
-    uint nIgnoreF, nIgnoreS, nIgnoreQ;
+    uint nClusters, nEdges, nArs, nSinks, nSpace, nIgnoreF, nIgnoreS, nIgnoreQ;
     vector<std::string> edges;
     std::vector<std::string> sIgnoreF, sIgnoreS, sIgnoreQ;
-    matrix<double> pSinks, clusters;
-    matrix<double> vh, input_vector;
-    bool parseConfig(std::string conf_path);
+    matrix<double> pSinks, clusters, vh, input_vector;
+    std::shared_ptr<spdlog::logger> xsection_logger, xsection_console;
+
+    bool parseConfig(std::string json_path);
 
 public: 
     Mostro(std::string xsection_id, DataSource data_source);

@@ -32,6 +32,7 @@ add_compile_options(-Wall -Werror -fdiagnostics-color=auto)
     
 find_package(jsoncpp REQUIRED)
 find_package(Boost REQUIRED)
+find_package(spdlog REQUIRED)
 
 set(ENV{PKG_CONFIG_PATH} $ENV{PKG_CONFIG_PATH}:/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/local/share/pkgconfig:/usr/lib64/pkgconfig)
 

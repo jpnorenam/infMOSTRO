@@ -6,7 +6,6 @@
  ****************************************************/
 
 #include <infmostro/mostro.h>
-
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/json.h>
 #include <boost/numeric/ublas/matrix.hpp>
@@ -17,23 +16,33 @@
 #include <unistd.h>
 
 Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI) {
+    spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + "] %v ***");
 	id = xsection_id;
     source = data_source;
     isInit = false;
+    xsection_console = spdlog::stdout_color_mt("console");
+    xsection_console->info("initializing infMOSTRO.");
 
-    if(source == FLEXI)
-        cPath = INFMOSTRO_HOME + "/" + id + "/flexi/" + id + ".json";
-    else if(source == ARS)
-        cPath = INFMOSTRO_HOME + "/" + id + "/ars/" + id + ".json";
+    if (source == FLEXI) {
+        cPath = INFMOSTRO_HOME + "/" + id + "/flexi/";
+        cFile = cPath + id + ".json";
+    }
+    else if (source == ARS) {
+        cPath = INFMOSTRO_HOME + "/" + id + "/ars/";
+        cFile = cPath + id + ".json";
+    }
 
-    if(access(cPath.c_str(), F_OK) != -1)
-        isInit = parseConfig(cPath);
+    if (access(cFile.c_str(), F_OK) != -1) {
+        isInit = parseConfig(cFile);
+        xsection_logger = spdlog::basic_logger_mt("basic_logger", cPath + "log.txt");
+        xsection_logger->info(cFile + " was correctly initialized.");
+    }
     else
-        std::cout  << "[infMOSTRO." + id + "] no existe un archivo de configuración."  << std::endl;
+        xsection_console->error("{0} doesn't exist.", cFile);
 }
 
-bool Mostro::parseConfig(std::string conf_path){
-    std::ifstream jsonf(conf_path, std::ifstream::binary);
+bool Mostro::parseConfig(std::string json_path){
+    std::ifstream jsonf(json_path, std::ifstream::binary);
     Json::Value json_value;
     jsonf >> json_value;
 
@@ -87,15 +96,20 @@ bool Mostro::parseConfig(std::string conf_path){
 }
  
 std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
+    spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
     if (isInit)
         goto suggest;
-    else
-        return "[infMOSTRO." + id + ".flexi] error: no fue instanciado o inicializado correctamente.";
+    else {
+        xsection_console->error("can't suggest a plan without a correctly initialization.");
+        xsection_logger->error("can't suggest a plan without a correctly initialization.");
+        return "infMOSTRO." + id + ".flexi.error-1";
+    }
 
 suggest:
     if (dsize != nEdges) {
-        std::cout << "[infMOSTRO." + id + ".flexi] error: los datos provenientes de " + std::to_string(source) + " están incompletos.";
-        return "error: " + std::to_string(source) + "_data";
+        xsection_console->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
+        xsection_logger->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
+        return "infMOSTRO." + id + ".flexi.error-2";
     }
     else {
         for (uint e = 0; e < nEdges; e++) {
@@ -118,7 +132,7 @@ suggest:
         }
         matrix<double> aPoint = prod(input_vector, vh); //vh is unitary vh.T = vh^-1
         int plan = -1;
-        double cdist = max_euclid;
+        double cdist = 10E10;
         for (uint c = 0; c < nClusters; c++) {
             vector<double> diff(3);
             for (int d = 0; d < 3; d++)
@@ -129,24 +143,39 @@ suggest:
                 plan = c;
             }   
         }
-        if (plan >= 0)
+        if (cdist < max_euclid) {
+            xsection_console->info("recommends plan{0:d}", plan);
+            xsection_logger->info("recommends plan{0:d}", plan);
             return id + ".flexi.plan" + std::to_string(plan);
-        else
-            return "[infMOSTRO." + id + ".flexi] advertencia: el estado estimado de la intersección se aleja demasiado de los estados históricos.";
+        }
+        else if(cdist > max_euclid && cdist < max_euclid*3) {
+            xsection_console->warn("uncertain recommendation of plan{0:d}", plan);
+            xsection_logger->warn("uncertain recommendation of plan{0:d}", plan);
+            return id + ".flexi.plan" + std::to_string(plan);
+        }
+        else {
+            xsection_console->error("the estimated fluxes by flexi are too far away from the known records");
+            xsection_logger->error("the estimated fluxes by flexi are too far away from the known records");
+            return id + ".flexi.error-3";
+        }
     }
 }
 
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
-
+    spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
     if (isInit)
         goto suggest;
-    else
-        return "[infMOSTRO." + id + ".ars] error: no fue instanciado o inicializado correctamente.";
+    else {
+        xsection_console->error("can't suggest a plan without a correctly initialization.");
+        xsection_logger->error("can't suggest a plan without a correctly initialization.");
+        return "infMOSTRO." + id + ".ars.error-1";
+    }
 
 suggest:
     if (dsize != nEdges) {
-        std::cout << "[infMOSTRO." + id + ".ars] error: los datos provenientes de " + std::to_string(source) + " están incompletos.";
-        return "error: " + std::to_string(source) + "_data";
+        xsection_console->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
+        xsection_logger->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
+        return "infMOSTRO." + id + ".ars.error-2";
     }
     else {
         for (uint e = 0; e < nEdges; e++) {
@@ -168,7 +197,7 @@ suggest:
         }
         matrix<double> aPoint = prod(input_vector, vh); //vh is unitary vh.T = vh^-1
         int plan = -1;
-        double cdist = max_euclid;
+        double cdist = 10E10;
         for (uint c = 0; c < nClusters; c++) {
             vector<double> diff(3);
             for (int d = 0; d < 3; d++)
@@ -179,9 +208,20 @@ suggest:
                 plan = c;
             }
         }
-        if (plan >= 0)
+        if (cdist < max_euclid) {
+            xsection_console->info("recommends plan{0:d}", plan);
+            xsection_logger->info("recommends plan{0:d}", plan);
             return id + ".ars.plan" + std::to_string(plan);
-        else
-            return "[infMOSTRO." + id + ".ars] advertencia: el estado medido de la intersección se aleja demasiado de los estados históricos.";
+        }
+        else if (cdist > max_euclid && cdist < max_euclid * 3) {
+            xsection_console->warn("uncertain recommendation of plan{0:d}", plan);
+            xsection_logger->warn("uncertain recommendation of plan{0:d}", plan);
+            return id + ".ars.plan" + std::to_string(plan);
+        }
+        else {
+            xsection_console->error("the measured fluxes by ars are too far away from the known records");
+            xsection_logger->error("the measured fluxes by ars are too far away from the known records");
+            return id + ".ars.error-3";
+        }
     }
 }
