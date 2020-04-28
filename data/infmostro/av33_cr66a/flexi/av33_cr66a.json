@@ -6,7 +6,6 @@
     "Av. 33 >Oriente",
     "Carrera 65D >NorOriente"
   ],
-  "flexi": 1,
   "entries": {
     "Av_33_Occidente-f-ENT": "Av. 33 >Occidente",
     "Carrera_65D_SurOccidente-f-ENT": "Carrera 65D >SurOccidente",
@@ -28,152 +27,6 @@
     "speed": [ "Av. 33 >Oriente", "Carrera 65D >NorOriente" ],
     "queue": [ "Av. 33 >Oriente", "Carrera 65D >NorOriente" ]
   },
-  "routes": [
-    [
-      "Av. 33 >Occidente",
-      "Av. 33 >Occidente",
-      1,
-      "3",
-      1600,
-      3,
-      300
-    ],
-    [
-      "Av. 33 >Oriente",
-      "Av. 33 >Oriente",
-      1,
-      "3",
-      1600,
-      3,
-      52
-    ],
-    [
-      "Carrera 65D >NorOriente",
-      "Carrera 65D >NorOriente",
-      1,
-      "1",
-      1000,
-      2,
-      75
-    ],
-    [
-      "Carrera 65D >NorOriente",
-      "Av. 33 >Oriente",
-      1,
-      "1",
-      1000,
-      2,
-      75
-    ],
-    [
-      "Carrera 65D >SurOccidente",
-      "Carrera 65D >SurOccidente",
-      1,
-      "1",
-      1000,
-      2,
-      150
-    ],
-    [
-      "Carrera 65D >SurOccidente",
-      "Av. 33 >Occidente",
-      1,
-      "1",
-      1000,
-      2,
-      150
-    ]
-  ],
-  "signal_groups": {
-    "1": [
-      4,
-      5,
-      6
-    ],
-    "2": [
-      11,
-      12,
-      13,
-      14
-    ],
-    "3": [
-      0,
-      1,
-      2,
-      3
-    ],
-    "4": [
-      7,
-      8,
-      9,
-      10
-    ]
-  },
-  "cluster_order": [
-    1,
-    1,
-    1,
-    1,
-    1,
-    2,
-    5,
-    5,
-    5,
-    5,
-    7,
-    7,
-    5,
-    7,
-    7,
-    7,
-    7,
-    5,
-    3,
-    3,
-    4,
-    4,
-    0,
-    2
-  ],
-  "phases": 4,
-  "min_phase_time": [
-    13,
-    18,
-    13,
-    3
-  ],
-  "max_phase_time": [
-    "inf",
-    18,
-    "inf",
-    "inf"
-  ],
-  "strings": [
-    [
-      "GGGGrrrGGGGrrrr",
-      1
-    ],
-    [
-      "yyyyrrryyyyrrrr",
-      1
-    ],
-    [
-      "rrrrrrrrrrrrrrr",
-      2
-    ],
-    [
-      "rrrrGGGrrrrGGGG",
-      3
-    ],
-    [
-      "rrrryyyrrrryyyy",
-      3
-    ],
-    [
-      "rrrrrrrrrrrrrrr",
-      4
-    ]
-  ],
   "singular_vectors": [
     [
       -0.24306212907955277,
@@ -224,64 +77,56 @@
         -2240.2564123151383,
         107.07990639703019,
         93.87496903848209
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -2056.339056036387,
         -261.7938267816511,
         -7.236222881321675
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -2240.01735606873,
         523.3539811546484,
         -24.404071963802444
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -2096.297151441857,
         3.693374145411486,
         -78.32627174490881
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -2313.9430114188,
         252.1124007478731,
         59.4847382788341
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -2002.6632572797128,
         281.5212703362086,
         -173.90185562099296
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -2067.2511200515596,
         -170.6551721712769,
         -21.00383244463118
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -2306.029923289333,
         -25.305255848698025,
         128.2497285733716
-      ],
-      "plan": "????"
+      ]
     }
   ],
   "avg_distance": 392.965288626098

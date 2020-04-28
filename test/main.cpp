@@ -3,7 +3,6 @@
 int main()
 {
 	/******************************************** FLEXI EXAMPLES **************************************************************/
-
 	FlexiData flexi_cll44_cr84_1 = { .edge = "Av. San Juan >Oriente", .flow = 80.2 * 12, .speed = 8.9, .queue = 140.8 };
 	FlexiData flexi_cll44_cr84_2 = { .edge = "Av. San Juan >Occidente", .flow = 48.7 * 12, .speed = 11.0, .queue = 90.5 };
 	FlexiData flexi_cll44_cr84_3 = { .edge = "Carrera 84 >(N)", .flow = 100.1 * 12, .speed = 7.5, .queue = 96.3 };

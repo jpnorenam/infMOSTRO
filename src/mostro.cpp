@@ -33,10 +33,8 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
     }
 
     if (access(cFile.c_str(), F_OK) != -1) {
-        isInit = parseConfig(cFile);
         xsection_logger = spdlog::basic_logger_mt(id + ".logger", cPath + id + ".log.txt");
-        xsection_console->info(cFile + " was correctly initialized.");
-        xsection_logger->info(cFile + " was correctly initialized.");
+        isInit = parseConfig(cFile);
     }
     else
         xsection_console->error("{0} doesn't exist.", cFile);
@@ -45,18 +43,23 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
 bool Mostro::parseConfig(std::string json_path){
     std::ifstream jsonf(json_path, std::ifstream::binary);
     Json::Value json_value;
-    jsonf >> json_value;
 
-    nSpace = json_value["singular_vectors"][0].size();
-    nSinks = json_value["sinks"].size();
-    nEdges = json_value["edges"].size();
-    nClusters = json_value["clusters"].size();
-
-    nIgnoreF = json_value["ignore"]["flow"].size();
-    nIgnoreS = json_value["ignore"]["speed"].size();
-    nIgnoreQ = json_value["ignore"]["queue"].size();
-
-    max_euclid = json_value["avg_distance"].asDouble();
+    try {
+        jsonf >> json_value;
+        nSpace = json_value["singular_vectors"][0].size();
+        nSinks = json_value["sinks"].size();
+        nEdges = json_value["edges"].size();
+        nClusters = json_value["clusters"].size();
+        nIgnoreF = json_value["ignore"]["flow"].size();
+        nIgnoreS = json_value["ignore"]["speed"].size();
+        nIgnoreQ = json_value["ignore"]["queue"].size();
+        max_euclid = json_value["avg_distance"].asDouble();
+    }
+    catch (int e) {
+        xsection_console->error(cFile + " couldn't be correctly initialized.");
+        xsection_logger->error(cFile + " couldn't be correctly initialized.");
+        return false;
+    }
 
     pSinks.resize(nSinks, nEdges);
     for (uint s = 0; s < nSinks; s++) {
@@ -93,6 +96,8 @@ bool Mostro::parseConfig(std::string json_path){
     else if (source == ARS)
         input_vector.resize(1, nEdges * 2 + pSinks.size1() - nIgnore);
 
+    xsection_console->info(cFile + " was correctly initialized.");
+    xsection_logger->info(cFile + " was correctly initialized.");
     return true;
 }
  
@@ -103,14 +108,14 @@ std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
         xsection_logger->error("can't suggest a plan without a correctly initialization.");
-        return "infMOSTRO." + id + ".flexi.error-1";
+        return id + "/flexi/error-1";
     }
 
 suggest:
     if (dsize != nEdges) {
         xsection_console->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
         xsection_logger->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
-        return "infMOSTRO." + id + ".flexi.error-2";
+        return id + "/flexi/error-2";
     }
     else {
         for (uint e = 0; e < nEdges; e++) {
@@ -145,19 +150,19 @@ suggest:
             }   
         }
         if (cdist < max_euclid) {
-            xsection_console->info("recommends plan{0:d}", plan);
-            xsection_logger->info("recommends plan{0:d}", plan);
-            return id + ".flexi.plan" + std::to_string(plan);
+            xsection_console->info("recommends planC{0:d}", plan);
+            xsection_logger->info("recommends planC{0:d}", plan);
+            return id + "/flexi/planC" + std::to_string(plan);
         }
         else if(cdist > max_euclid && cdist < max_euclid*3) {
             xsection_console->warn("uncertain recommendation of plan{0:d}", plan);
             xsection_logger->warn("uncertain recommendation of plan{0:d}", plan);
-            return id + ".flexi.plan" + std::to_string(plan);
+            return id + "/flexi/planC" + std::to_string(plan);
         }
         else {
             xsection_console->error("the estimated fluxes by flexi are too far away from the known records");
             xsection_logger->error("the estimated fluxes by flexi are too far away from the known records");
-            return id + ".flexi.error-3";
+            return id + "/flexi/error-3";
         }
     }
 }
@@ -169,14 +174,14 @@ std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
         xsection_logger->error("can't suggest a plan without a correctly initialization.");
-        return "infMOSTRO." + id + ".ars.error-1";
+        return id + "/ars/error-1";
     }
 
 suggest:
     if (dsize != nEdges) {
         xsection_console->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
         xsection_logger->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
-        return "infMOSTRO." + id + ".ars.error-2";
+        return id + "/ars/error-2";
     }
     else {
         for (uint e = 0; e < nEdges; e++) {
@@ -210,19 +215,19 @@ suggest:
             }
         }
         if (cdist < max_euclid) {
-            xsection_console->info("recommends plan{0:d}", plan);
-            xsection_logger->info("recommends plan{0:d}", plan);
-            return id + ".ars.plan" + std::to_string(plan);
+            xsection_console->info("recommends planC{0:d}", plan);
+            xsection_logger->info("recommends planC{0:d}", plan);
+            return id + "/ars/planC" + std::to_string(plan);
         }
         else if (cdist > max_euclid && cdist < max_euclid * 3) {
-            xsection_console->warn("uncertain recommendation of plan{0:d}", plan);
-            xsection_logger->warn("uncertain recommendation of plan{0:d}", plan);
-            return id + ".ars.plan" + std::to_string(plan);
+            xsection_console->warn("uncertain recommendation of planC{0:d}", plan);
+            xsection_logger->warn("uncertain recommendation of planC{0:d}", plan);
+            return id + "/ars/planC" + std::to_string(plan);
         }
         else {
             xsection_console->error("the measured fluxes by ars are too far away from the known records");
             xsection_logger->error("the measured fluxes by ars are too far away from the known records");
-            return id + ".ars.error-3";
+            return id + "/ars/error-3";
         }
     }
 }

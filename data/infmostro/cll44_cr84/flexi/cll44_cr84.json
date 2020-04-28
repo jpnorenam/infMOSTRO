@@ -6,7 +6,6 @@
     "Carrera 84 >(N)",
     "Carrera 84 >(S)"
   ],
-  "flexi": 1,
   "entries": {
     "Av_San_Juan_Oriente-f-ENT": "Av. San Juan >Oriente",
     "Av_San_Juan_Occidente-f-ENT": "Av. San Juan >Occidente",
@@ -17,161 +16,30 @@
     "Av_San_Juan_Occidente-f-SAL": "Av. San Juan >Occidente"
   },
   "sinks": [
-    [ 0.8, 0, 1.0, 0.2 ],
-    [ 0.2, 0, 0, 0.6 ],
-    [ 0, 1.0, 0, 0.2 ]
+    [
+      0.8,
+      0,
+      1.0,
+      0.2
+    ],
+    [
+      0.2,
+      0,
+      0,
+      0.6
+    ],
+    [
+      0,
+      1.0,
+      0,
+      0.2
+    ]
   ],
   "ignore": {
     "flow": [],
     "speed": [],
     "queue": []
   },
-  "routes": [
-    [
-      "Av. San Juan >Oriente",
-      "Av. San Juan >Oriente",
-      1,
-      "5",
-      1000,
-      3,
-      98
-    ],
-    [
-      "Av. San Juan >Oriente",
-      "Carrera 84 >(S)",
-      1,
-      "5",
-      1000,
-      1,
-      98
-    ],
-    [
-      "Av. San Juan >Occidente",
-      "Av. San Juan >Occidente",
-      1,
-      "3-4-5",
-      1600,
-      3,
-      134
-    ],
-    [
-      "Carrera 84 >(N)",
-      "Av. San Juan >Oriente",
-      1,
-      "3",
-      800,
-      1,
-      200
-    ],
-    [
-      "Carrera 84 >(S)",
-      "Carrera 84 >(S)",
-      1,
-      "1",
-      1100,
-      1,
-      127
-    ],
-    [
-      "Carrera 84 >(S)",
-      "Av. San Juan >Occidente",
-      1,
-      "1",
-      1100,
-      1,
-      127
-    ],
-    [
-      "Carrera 84 >(S)",
-      "Av. San Juan >Oriente",
-      1,
-      "1",
-      1100,
-      1,
-      127
-    ]
-  ],
-  "cluster_order": [
-    1,
-    1,
-    1,
-    1,
-    1,
-    2,
-    5,
-    5,
-    5,
-    5,
-    7,
-    7,
-    5,
-    7,
-    7,
-    7,
-    7,
-    5,
-    3,
-    3,
-    4,
-    4,
-    0,
-    2
-  ],
-  "phases": 6,
-  "min_phase_time": [
-    13,
-    1,
-    13,
-    1,
-    13,
-    22
-  ],
-  "max_phase_time": [
-    "inf",
-    "inf",
-    "inf",
-    "inf",
-    "inf",
-    22
-  ],
-  "strings": [
-    [
-      "GGGGrrrrrrrr",
-      1
-    ],
-    [
-      "yyyyrrrrrrrr",
-      1
-    ],
-    [
-      "rrrrrrrrrrrr",
-      2
-    ],
-    [
-      "rrrrGGGGrrrr",
-      3
-    ],
-    [
-      "rrrrGGGyrrrr",
-      3
-    ],
-    [
-      "rrrrGGGrrrrr",
-      4
-    ],
-    [
-      "rrrrGGGrGGGG",
-      5
-    ],
-    [
-      "rrrryyyryyyy",
-      5
-    ],
-    [
-      "rrrrrrrrrrrr",
-      6
-    ]
-  ],
   "singular_vectors": [
     [
       -0.2684166485734653,
@@ -231,64 +99,42 @@
         -3491.556997053618,
         36.7537544446184,
         107.776455990562
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -3899.2729749073023,
         299.3014191507409,
         -84.27976959521514
-      ],
-      "plan": "????"
-    },
-    {
-      "centroid": [
-        -3621.6691108306663,
-        -210.7130725996345,
-        2.313261996106767
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -3720.315657815759,
         267.5255010085567,
         -248.71617449841276
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -3349.1084803188323,
         -23.88586527500042,
         -16.87122818129199
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -3445.1849489783895,
         -235.1561340675213,
         -169.79154046932183
-      ],
-      "plan": "????"
+      ]
     },
     {
       "centroid": [
         -4041.35427123955,
         47.390267565860356,
         -177.75673750508759
-      ],
-      "plan": "????"
-    },
-    {
-      "centroid": [
-        -3449.8468943877333,
-        37.455251178226945,
-        62.50884231094143
-      ],
-      "plan": "????"
+      ]
     }
   ],
   "avg_distance": 440.0659545536181
