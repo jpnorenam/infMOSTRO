@@ -42,5 +42,7 @@ bin/
 *.vcxproj
 *.vcxproj.user
 
-#Vagrant logs
+# logs
 *.log
+*.log.txt
+
