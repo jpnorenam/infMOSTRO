@@ -34,9 +34,9 @@ private:
     bool parseConfig(std::string json_path);
 
 public: 
-    Mostro(std::string xsection_id, DataSource data_source);
-    std::string suggestedPlan(FlexiData flexi_data[], uint dsize);
-    std::string suggestedPlan(ArsData ars_data[], uint dsize);
+    Mostro(char* xsection_id, DataSource data_source);
+    const char* suggestedPlan(FlexiData flexi_data[], uint dsize);
+    const char* suggestedPlan(ArsData ars_data[], uint dsize);
 };
 
 
