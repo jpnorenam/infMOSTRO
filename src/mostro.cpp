@@ -15,8 +15,8 @@
 #include <algorithm>
 #include <unistd.h>
 
-Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI) {
-	id = xsection_id;
+Mostro::Mostro(char* xsection_id, DataSource data_source=DataSource::FLEXI) {
+	id = std::string(xsection_id);
     source = data_source;
     isInit = false;
     xsection_console = spdlog::stdout_color_mt(id+".console");
@@ -101,21 +101,21 @@ bool Mostro::parseConfig(std::string json_path){
     return true;
 }
  
-std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
+const char* Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
     if (isInit)
         goto suggest;
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
         xsection_logger->error("can't suggest a plan without a correctly initialization.");
-        return id + "/flexi/error-1";
+        return (id + "/flexi/error-1").c_str();
     }
 
 suggest:
     if (dsize != nEdges) {
         xsection_console->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
         xsection_logger->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
-        return id + "/flexi/error-2";
+        return (id + "/flexi/error-2").c_str();
     }
     else {
         for (uint e = 0; e < nEdges; e++) {
@@ -152,36 +152,36 @@ suggest:
         if (cdist < max_euclid) {
             xsection_console->info("recommends planC{0:d}", plan);
             xsection_logger->info("recommends planC{0:d}", plan);
-            return id + "/flexi/planC" + std::to_string(plan);
+            return (id + "/flexi/planC" + std::to_string(plan)).c_str();
         }
         else if(cdist > max_euclid && cdist < max_euclid*3) {
             xsection_console->warn("uncertain recommendation of plan{0:d}", plan);
             xsection_logger->warn("uncertain recommendation of plan{0:d}", plan);
-            return id + "/flexi/planC" + std::to_string(plan);
+            return (id + "/flexi/planC" + std::to_string(plan)).c_str();
         }
         else {
             xsection_console->error("the estimated fluxes by flexi are too far away from the known records");
             xsection_logger->error("the estimated fluxes by flexi are too far away from the known records");
-            return id + "/flexi/error-3";
+            return (id + "/flexi/error-3").c_str();
         }
     }
 }
 
-std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
+const char* Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
     if (isInit)
         goto suggest;
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
         xsection_logger->error("can't suggest a plan without a correctly initialization.");
-        return id + "/ars/error-1";
+        return (id + "/ars/error-1").c_str();
     }
 
 suggest:
     if (dsize != nEdges) {
         xsection_console->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
         xsection_logger->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
-        return id + "/ars/error-2";
+        return (id + "/ars/error-2").c_str();
     }
     else {
         for (uint e = 0; e < nEdges; e++) {
@@ -217,17 +217,17 @@ suggest:
         if (cdist < max_euclid) {
             xsection_console->info("recommends planC{0:d}", plan);
             xsection_logger->info("recommends planC{0:d}", plan);
-            return id + "/ars/planC" + std::to_string(plan);
+            return (id + "/ars/planC" + std::to_string(plan)).c_str();
         }
         else if (cdist > max_euclid && cdist < max_euclid * 3) {
             xsection_console->warn("uncertain recommendation of planC{0:d}", plan);
             xsection_logger->warn("uncertain recommendation of planC{0:d}", plan);
-            return id + "/ars/planC" + std::to_string(plan);
+            return (id + "/ars/planC" + std::to_string(plan)).c_str();
         }
         else {
             xsection_console->error("the measured fluxes by ars are too far away from the known records");
             xsection_logger->error("the measured fluxes by ars are too far away from the known records");
-            return id + "/ars/error-3";
+            return (id + "/ars/error-3").c_str();
         }
     }
 }
