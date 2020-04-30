@@ -14,8 +14,6 @@ int main()
 	std::string Plan_flexi_cll44_cr84 = cll44_cr84.suggestedPlan(flexi_list_cll44_cr84, 4);
 	std::cout << Plan_flexi_cll44_cr84 << std::endl;
 
-
-
 	FlexiData flexi_av33_cr66a_1 = { .edge = "Av. 33 >Occidente", .flow = 40.8 * 12, .speed = 11.0, .queue = 352.6 };
 	FlexiData flexi_av33_cr66a_2 = { .edge = "Carrera 65D >SurOccidente", .flow = 93.8 * 12, .speed = 6.7, .queue = 212.9 };
 	FlexiData flexi_av33_cr66a_3 = { .edge = "Av. 33 >Oriente", .flow = 36.7 * 12, .speed = NAN, .queue = NAN };

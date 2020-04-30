@@ -103,6 +103,7 @@ bool Mostro::parseConfig(std::string json_path){
  
 std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
+    xsection_console->error("suggested plan called.");
     if (isInit)
         goto suggest;
     else {
@@ -122,10 +123,15 @@ suggest:
             for (uint d = 0; d < nEdges; d++) {
                 if (flexi_data[d].edge == edges[e]) {
                     input_vector(0, e) = flexi_data[d].flow;
-                    if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end()) 
+                    xsection_console->info("{0}.flow->{1:f} v/h", edges[e], flexi_data[d].flow);
+                    if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end()) {
                         input_vector(0, 1 * nEdges + nSinks + e) = flexi_data[d].speed;
-                    if (std::find(sIgnoreQ.begin(), sIgnoreQ.end(), edges[e]) == sIgnoreQ.end())
+                        xsection_console->info("{0}.speed->{1:f} km/h", edges[e], flexi_data[d].speed);
+                    }
+                    if (std::find(sIgnoreQ.begin(), sIgnoreQ.end(), edges[e]) == sIgnoreQ.end()) {
                         input_vector(0, 2 * nEdges + nSinks - nIgnoreS + e) = flexi_data[d].queue;
+                        xsection_console->info("{0}.queue->{1:f} m", edges[e], flexi_data[d].queue);
+                    }
                     break;
                 }
             }
@@ -169,6 +175,7 @@ suggest:
 
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
+    xsection_console->error("suggested plan called.");
     if (isInit)
         goto suggest;
     else {
