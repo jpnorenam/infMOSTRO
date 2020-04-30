@@ -252,12 +252,14 @@ extern "C" {
         return new Mostro(std::string(xsection_id), data_source);
     }
     char* suggestPlanFlexi(Mostro* mostro, FlexiData flexi_data[], int size) {
-        char res[40];
+        char* res;
+        res = (char*)malloc(sizeof(char) * 40);
         strcpy(res, (mostro->suggestedPlan(flexi_data, (uint)size)).c_str());
         return res;
     }
     char* suggestPlanArs(Mostro* mostro, ArsData ars_data[], int size) {
-        char res[40];
+        char* res;
+        res = (char*)malloc(sizeof(char) * 40);
         strcpy(res, (mostro->suggestedPlan(ars_data, (uint)size)).c_str());
         return res;
     }

@@ -17,7 +17,7 @@ int main()
 
 	Mostro* cll44_cr84 = createInstance("cll44_cr84", DataSource::FLEXI);
 	char* Plan_flexi_cll44_cr84 = suggestPlanFlexi(cll44_cr84,flexi_list_cll44_cr84, 4);
-	//std::cout << std::string(Plan_flexi_cll44_cr84) << std::endl;
+	std::cout << std::string(Plan_flexi_cll44_cr84) << std::endl;
 
 	FlexiData flexi_av33_cr66a_1 = { .edge = "Av. 33 >Occidente", .flow = 40.8 * 12, .speed = 11.0, .queue = 352.6 };
 	FlexiData flexi_av33_cr66a_2 = { .edge = "Carrera 65D >SurOccidente", .flow = 93.8 * 12, .speed = 6.7, .queue = 212.9 };
