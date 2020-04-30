@@ -103,9 +103,10 @@ bool Mostro::parseConfig(std::string json_path){
  
 std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
-    xsection_console->error("suggested plan called expeciting {0:d} inputs, and {0:d} were sent.", nEdges, dsize);
-    if (isInit)
+    if (isInit) {
+        xsection_console->error("suggested plan called expecting {0:d} inputs, and {1:d} were sent.", nEdges, dsize);
         goto suggest;
+    }
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
         xsection_logger->error("can't suggest a plan without a correctly initialization.");
@@ -175,9 +176,11 @@ suggest:
 
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
-    xsection_console->error("suggested plan called expeciting {0:d} inputs, and {0:d} were sent.", nEdges, dsize);
-    if (isInit)
+    if (isInit) {
+        xsection_console->error("suggested plan called expecting {0:d} inputs, and {1:d} were sent.", nEdges, dsize);
         goto suggest;
+    }
+
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
         xsection_logger->error("can't suggest a plan without a correctly initialization.");
