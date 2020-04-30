@@ -1,3 +1,4 @@
+#include <infmostro/mostro.h>
 
 int main()
 {
