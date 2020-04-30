@@ -1,7 +1,7 @@
-#include <infmostro/mostro.h>
 
 int main()
 {
+
 	/******************************************** FLEXI EXAMPLES **************************************************************/
 	FlexiData flexi_cll44_cr84_1 = { .edge = "Av. San Juan >Oriente", .flow = 80.2 * 12, .speed = 8.9, .queue = 140.8 };
 	FlexiData flexi_cll44_cr84_2 = { .edge = "Av. San Juan >Occidente", .flow = 48.7 * 12, .speed = 11.0, .queue = 90.5 };
@@ -10,8 +10,9 @@ int main()
 	FlexiData flexi_list_cll44_cr84[4] = { flexi_cll44_cr84_3,  flexi_cll44_cr84_2,  flexi_cll44_cr84_1, flexi_cll44_cr84_4 };
 
 	Mostro cll44_cr84 = Mostro("cll44_cr84", DataSource::FLEXI);
-	const char* Plan_flexi_cll44_cr84 = cll44_cr84.suggestedPlan(flexi_list_cll44_cr84, 4);
+	std::string Plan_flexi_cll44_cr84 = cll44_cr84.suggestedPlan(flexi_list_cll44_cr84, 4);
 	std::cout << Plan_flexi_cll44_cr84 << std::endl;
+
 
 
 	FlexiData flexi_av33_cr66a_1 = { .edge = "Av. 33 >Occidente", .flow = 40.8 * 12, .speed = 11.0, .queue = 352.6 };
@@ -21,7 +22,7 @@ int main()
 	FlexiData flexi_list_av33_cr66a[4] = { flexi_av33_cr66a_2,  flexi_av33_cr66a_4,  flexi_av33_cr66a_3, flexi_av33_cr66a_1 };
 
 	Mostro av33_cr66a = Mostro("av33_cr66a", DataSource::FLEXI);
-	const char* Plan_flexi_av33_cr66a = av33_cr66a.suggestedPlan(flexi_list_av33_cr66a, 4);
+	std::string Plan_flexi_av33_cr66a = av33_cr66a.suggestedPlan(flexi_list_av33_cr66a, 4);
 	std::cout << Plan_flexi_av33_cr66a << std::endl;
 
 	/********************************************* ARS EXAMPLES ***************************************************************/
@@ -56,7 +57,7 @@ int main()
 	};
 
 	Mostro cll44_cr65 = Mostro("cll44_cr65", DataSource::ARS);
-	const char* Plan_ars_cll44_cr65 = cll44_cr65.suggestedPlan(ars_list_cll44_cr65, 22);
+	std::string Plan_ars_cll44_cr65 = cll44_cr65.suggestedPlan(ars_list_cll44_cr65, 22);
 	std::cout << Plan_ars_cll44_cr65 << std::endl;
 
 	return 0;
