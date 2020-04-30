@@ -103,7 +103,7 @@ bool Mostro::parseConfig(std::string json_path){
  
 std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
-    xsection_console->error("suggested plan called expeciting {0:d}, and {0:d} were sent.", nEdges, dsize);
+    xsection_console->error("suggested plan called expeciting {0:d} inputs, and {0:d} were sent.", nEdges, dsize);
     if (isInit)
         goto suggest;
     else {
@@ -175,7 +175,7 @@ suggest:
 
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
-    xsection_console->error("suggested plan called expeciting {0:d}, and {0:d} were sent.", nEdges, dsize);
+    xsection_console->error("suggested plan called expeciting {0:d} inputs, and {0:d} were sent.", nEdges, dsize);
     if (isInit)
         goto suggest;
     else {
@@ -251,11 +251,14 @@ extern "C" {
     Mostro* createInstance(const char* xsection_id, DataSource data_source) {
         return new Mostro(std::string(xsection_id), data_source);
     }
-    const char* suggestPlanFlexi(Mostro* mostro, FlexiData flexi_data[], int size) {
-        return (mostro->suggestedPlan(flexi_data, (uint)size)).c_str();
+    char* suggestPlanFlexi(Mostro* mostro, FlexiData flexi_data[], int size) {
+        char res[40];
+        strcpy(res, (mostro->suggestedPlan(flexi_data, (uint)size)).c_str());
+        return res;
     }
-
-    const char* suggestPlanArs(Mostro* mostro, ArsData ars_data[], int size) {
-        return (mostro->suggestedPlan(ars_data, (uint)size)).c_str();
+    char* suggestPlanArs(Mostro* mostro, ArsData ars_data[], int size) {
+        char res[40];
+        strcpy(res, (mostro->suggestedPlan(ars_data, (uint)size)).c_str());
+        return res;
     }
 }

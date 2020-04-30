@@ -16,7 +16,8 @@ using namespace boost::numeric::ublas;
 #ifdef DEBUG
 const std::string INFMOSTRO_HOME = "/vagrant/infMOSTRO/data/infmostro";
 #else
-const std::string INFMOSTRO_HOME = std::getenv("INFMOSTRO_HOME");
+const std::string INFMOSTRO_HOME = "/vagrant/infMOSTRO/data/infmostro";
+//const std::string INFMOSTRO_HOME = std::getenv("INFMOSTRO_HOME");
 #endif
 
 class Mostro { 
@@ -40,7 +41,7 @@ public:
 };
 
 extern "C" Mostro * createInstance(const char* xsection_id, DataSource data_source);
-extern "C" const char* suggestPlanFlexi(Mostro * mostro, FlexiData flexi_data[], int size);
-extern "C" const char* suggestPlanArs(Mostro * mostro, ArsData ars_data[], int size);
+extern "C" char* suggestPlanFlexi(Mostro * mostro, FlexiData flexi_data[], int size);
+extern "C" char* suggestPlanArs(Mostro * mostro, ArsData ars_data[], int size);
 
 
