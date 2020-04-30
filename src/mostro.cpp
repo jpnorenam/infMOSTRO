@@ -122,15 +122,15 @@ suggest:
         for (uint e = 0; e < nEdges; e++) {
             for (uint d = 0; d < nEdges; d++) {
                 if (flexi_data[d].edge == edges[e]) {
+                    xsection_console->info("{0}.flow->{1:f} (v/h)", edges[e], flexi_data[d].flow);
                     input_vector(0, e) = flexi_data[d].flow;
-                    xsection_console->info("{0}.flow->{1:f} v/h", edges[e], flexi_data[d].flow);
                     if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end()) {
+                        xsection_console->info("{0}.speed->{1:f} (km/h)", edges[e], flexi_data[d].speed);
                         input_vector(0, 1 * nEdges + nSinks + e) = flexi_data[d].speed;
-                        xsection_console->info("{0}.speed->{1:f} km/h", edges[e], flexi_data[d].speed);
                     }
                     if (std::find(sIgnoreQ.begin(), sIgnoreQ.end(), edges[e]) == sIgnoreQ.end()) {
+                        xsection_console->info("{0}.queue->{1:f} (m)", edges[e], flexi_data[d].queue);
                         input_vector(0, 2 * nEdges + nSinks - nIgnoreS + e) = flexi_data[d].queue;
-                        xsection_console->info("{0}.queue->{1:f} m", edges[e], flexi_data[d].queue);
                     }
                     break;
                 }
@@ -194,10 +194,17 @@ suggest:
         for (uint e = 0; e < nEdges; e++) {
             for (uint d = 0; d < nEdges; d++) {
                 if (ars_data[d].id == edges[e]) {
-                    if (std::find(sIgnoreF.begin(), sIgnoreF.end(), edges[e]) == sIgnoreF.end())
+                    if (std::find(sIgnoreF.begin(), sIgnoreF.end(), edges[e]) == sIgnoreF.end()) {
+                        xsection_console->info("{0}.flow->{1:f} (v1/5min)", edges[e], ars_data[d].flow1);
+                        xsection_console->info("{0}.flow->{1:f} (v2/5min)", edges[e], ars_data[d].flow2);
+                        xsection_console->info("{0}.flow->{1:f} (v3/5min)", edges[e], ars_data[d].flow2);
                         input_vector(0, e) = ars_data[d].flow1 + 2.0 * ars_data[d].flow2 + 2.5 * ars_data[d].flow3;
-                    if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end())
+                        
+                    }                       
+                    if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end()) {
+                        xsection_console->info("{0}.flow->{1:f} (km/h)", edges[e], ars_data[d].speed);
                         input_vector(0, nEdges - nIgnoreF + e) = ars_data[d].speed;
+                    }
                     break;
                 }
             }
