@@ -103,7 +103,7 @@ bool Mostro::parseConfig(std::string json_path){
  
 std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
-    xsection_console->error("suggested plan called.");
+    xsection_console->error("suggested plan called expeciting {0:d}, and {0:d} were sent.", nEdges, dsize);
     if (isInit)
         goto suggest;
     else {
@@ -114,8 +114,8 @@ std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
 
 suggest:
     if (dsize != nEdges) {
-        xsection_console->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
-        xsection_logger->error("the number of expected inputs ({0:d}) from flexi is incomplete.", nEdges);
+        xsection_console->error("the number of recived inputs ({0:d}) from flexi is incomplete.", dsize);
+        xsection_logger->error("the number of recived inputs ({0:d}) from flexi is incomplete.", dsize);
         return id + "/flexi/error-2";
     }
     else {
@@ -175,7 +175,7 @@ suggest:
 
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
-    xsection_console->error("suggested plan called.");
+    xsection_console->error("suggested plan called expeciting {0:d}, and {0:d} were sent.", nEdges, dsize);
     if (isInit)
         goto suggest;
     else {
@@ -186,8 +186,8 @@ std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
 
 suggest:
     if (dsize != nEdges) {
-        xsection_console->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
-        xsection_logger->error("the number of expected inputs ({0:d}) from ars is incomplete.", nEdges);
+        xsection_console->error("the number of recived inputs ({0:d}) from ars is incomplete.", dsize);
+        xsection_logger->error("the number of recived inputs ({0:d}) from ars is incomplete.", dsize);
         return id + "/ars/error-2";
     }
     else {
@@ -251,11 +251,11 @@ extern "C" {
     Mostro* createInstance(const char* xsection_id, DataSource data_source) {
         return new Mostro(std::string(xsection_id), data_source);
     }
-    const char* suggestPlanFlexi(Mostro* mostro, FlexiData flexi_data[], uint size) {
-        return (mostro->suggestedPlan(flexi_data, size)).c_str();
+    const char* suggestPlanFlexi(Mostro* mostro, FlexiData flexi_data[], int size) {
+        return (mostro->suggestedPlan(flexi_data, (uint)size)).c_str();
     }
 
-    const char* suggestPlanArs(Mostro* mostro, ArsData ars_data[], uint size) {
-        return (mostro->suggestedPlan(ars_data, size)).c_str();
+    const char* suggestPlanArs(Mostro* mostro, ArsData ars_data[], int size) {
+        return (mostro->suggestedPlan(ars_data, (uint)size)).c_str();
     }
 }

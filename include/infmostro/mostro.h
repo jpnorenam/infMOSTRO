@@ -40,7 +40,7 @@ public:
 };
 
 extern "C" Mostro * createInstance(const char* xsection_id, DataSource data_source);
-extern "C" const char* suggestPlanFlexi(Mostro * mostro, FlexiData flexi_data[], uint size);
-extern "C" const char* suggestPlanArs(Mostro * mostro, ArsData ars_data[], uint size);
+extern "C" const char* suggestPlanFlexi(Mostro * mostro, FlexiData flexi_data[], int size);
+extern "C" const char* suggestPlanArs(Mostro * mostro, ArsData ars_data[], int size);
 
 
