@@ -46,3 +46,6 @@ bin/
 *.log
 *.log.txt
 
+# data
+*.pdf
+
