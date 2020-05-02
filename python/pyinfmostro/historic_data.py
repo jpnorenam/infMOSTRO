@@ -39,7 +39,7 @@ def colapse_csv(input_dir, datacarril_list, output_path):
             json_data = json_data['hits'] if 'hits' in json_data else []
             for hit in json_data:
                 data_ = hit['_source']['Data']
-                timestamp_ = dt.datetime.strptime(data_['FechaHora'], "%Y-%m-%dT%H:%M:%S.%fZ") + dt.timedelta(hours=-5)
+                timestamp_ = dt.datetime.strptime(data_['FechaHora'], "%Y-%m-%dT%H:%M:%S.%fZ") + dt.timedelta(hours=-10)
                 bin_ = np.digitize(timestamp_.hour * 60 + timestamp_.minute, timeline)
                 df.loc[bin_,'Timestamp'] = timestamp_.strftime("%Y-%m-%dT%H:%M")
                 df.loc[bin_,'Day'] = timestamp_.weekday()
@@ -76,7 +76,7 @@ def preprocess_data(host, start_date, end_date, xsection_name, datacarril_list, 
         datetime_1 = datetime_0 + dt.timedelta(minutes=5)
         mktime_0 = int(time.mktime(datetime_0.timetuple()))
         mktime_1 = int(time.mktime(datetime_1.timetuple()))
-        res_path = 'tmp/{}.json'.format(datetime_0.strftime('%Y/%m/%d/%H-%M'))
+        res_path = 'tmp/{}/{}.json'.format(xsection_name, datetime_0.strftime('%Y/%m/%d/%H-%M'))
 
         if not os.path.exists(res_path):
             query = query_formatter(host, datacarril_list, mktime_0 * 1000, mktime_1 * 1000)
@@ -86,7 +86,7 @@ def preprocess_data(host, start_date, end_date, xsection_name, datacarril_list, 
             with open(res_path, 'w') as res_file:
                 json.dump(res, res_file)
 
-        if (datetime_1.strftime('%Y/%m/%d H') != datetime_0.strftime('%Y/%m/%d H')):
+        if (datetime_1.hour != datetime_0.hour):
             timeline_progress(mktime_1 - init_mktime, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
             if (datetime_1.strftime('%Y/%m/%d') != datetime_0.strftime('%Y/%m/%d')):
                 input_dir = 'tmp/{}'.format(datetime_0.strftime('%Y/%m/%d'))
