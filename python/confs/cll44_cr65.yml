@@ -3,13 +3,13 @@
 ##
 ## Licencia,
 ## otorgada a Secretaria de Movilidad de Medellin
-#
+######################################################
 ## Descomentar esto para descargar datos nuevos de ARS
-append_historical:
-  host: "http://181.129.51.43:9600"
-  start_date: "2020-04-27"
-  end_date: "2020-04-28"
-  delete_source: false
+#append_historical:
+#  host: "http://181.129.51.43:9600"
+#  start_date: "2020-04-27"
+#  end_date: "2020-04-28"
+#  delete_source: false
 ##
 ##
 ## Informacion general de la interseccion
@@ -58,7 +58,7 @@ xsection.edges:
       - "XC-1-JUAN-65-ENT:ORI-OCC 2"
       - "XC-2-JUAN-65-ENT:ORI-OCC 2"
 ##
-## Routas internas de la interseccion
+## Rutas internas de la interseccion
 xsection.routes:
   - origin: "Carrera 65 >(N)"
     lenght: 63

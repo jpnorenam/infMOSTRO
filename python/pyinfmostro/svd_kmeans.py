@@ -26,7 +26,7 @@ def svd_kmeans(xsection_name, datacarril_list, workspace):
     for col in dfv.columns:
         if(np.isnan(dfv[col].values[0]) or np.isnan(dfv[col].values[-1])):
             if (np.isnan(dfv[col].mean())):
-                print("[infmostro {}] warning: {} has no data (is full on nan), infmostro is dismissing it for clustering.".format(xsection_name,col))
+                print("[pyinfmostro {}] warning: {} has no data (is full on nan), infmostro is dismissing it for clustering.".format(xsection_name,col))
                 to_del.append(col)
             else:
                if(np.isnan(dfv[col].values[-1])):
@@ -41,7 +41,7 @@ def svd_kmeans(xsection_name, datacarril_list, workspace):
 
     # Calcular la descomposición en valores signulares 
     # https://blogs.oracle.com/r/using-svd-for-dimensionality-reduction
-    print("[infmostro {}] reducing and clustering historical data.".format(xsection_name))
+    print("[pyinfmostro {}] reducing and clustering historical data.".format(xsection_name))
     u, s, vh = linalg.svd(dfv, full_matrices=True)
     x = dfv@vh[0:3,:].T
     kmeans = sklearn.cluster.KMeans(k, max_iter=400, random_state=0)
@@ -119,4 +119,4 @@ def plot_results(xsection_name, workspace, x, s, vh, means, labels, clabels, fv)
     fig.legend([h1, h2], labels=labelorder, loc="center right", borderaxespad=0.5, title="Cluster ID")
     fig.savefig(os.path.join(workspace,"hourlydist.png"))
     plt.close()
-    print("[infmostro {}] clustering graphical results added to workspace.".format(xsection_name))
+    print("[pyinfmostro {}] clustering graphical results added to workspace.".format(xsection_name))

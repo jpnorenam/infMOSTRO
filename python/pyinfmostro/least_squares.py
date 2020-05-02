@@ -5,7 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 def routes_flow(xsection_name, workspace_dir, fv, datacarriles_list, edges_dict, routes_dict):
-    print("[infmostro {}] reconciling measurement errors and balancing routes demand.".format(xsection_name))
+    print("[pyinfmostro {}] reconciling measurement errors and balancing routes demand.".format(xsection_name))
     edges = {}
     edges_entries = []; edges_sinks = []
     entries = 0; sinks = 0
@@ -93,6 +93,6 @@ def routes_flow(xsection_name, workspace_dir, fv, datacarriles_list, edges_dict,
     fig.legend(ap1, labels=labelnames, loc="center right", borderaxespad=0.5, title="Cluster ID")
     fig.savefig(os.path.join(workspace_dir,"routes_demand.png"))
     plt.close()
-    print("[infmostro {}] routes demand graphical resultas added to workspace.".format(xsection_name))
+    print("[pyinfmostro {}] routes demand graphical resultas added to workspace.".format(xsection_name))
 
     return Fr, Fs

@@ -134,3 +134,6 @@ dmypy.json
 #tmp
 tmp/
 data/
+dist/
+build/
+*.spec

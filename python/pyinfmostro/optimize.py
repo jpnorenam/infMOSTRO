@@ -44,7 +44,7 @@ def opt_plans(xsection_name, Fr, Fs, conf_routes, conf_phases, workspace_dir):
         phasetimes[clust, :] = xopt
     df = pd.DataFrame(phasetimes, columns = phase_ids)
     df.to_csv(os.path.join(workspace_dir,"phase_times.csv"))
-    print("[infmostro {}] writting optimal planning results to workspace.".format(xsection_name))
+    print("[pyinfmostro {}] writting optimal planning results to workspace.".format(xsection_name))
 
 def fun(x, *args):
     x = np.atleast_2d(x).T
