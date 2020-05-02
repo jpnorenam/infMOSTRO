@@ -10,14 +10,23 @@ int main()
 	FlexiData flexi_av80_av33_4 = { .edge = "Av. 33 >Oriente", .flow = 1042.085700, .speed = -1.0, .queue = -1.0 };
 	FlexiData flexi_list_av80_av33[4] = { flexi_av80_av33_3,  flexi_av80_av33_2,  flexi_av80_av33_1, flexi_av80_av33_4 };
 
-	//Mostro cll44_cr84 = Mostro("cll44_cr84", DataSource::FLEXI);
-	//std::string Plan_flexi_cll44_cr84 = cll44_cr84.suggestedPlan(flexi_list_cll44_cr84, 4);
-	//std::cout << Plan_flexi_cll44_cr84 << std::endl;
-
 
 	Mostro* av80_av33 = createInstance("av80_av33", DataSource::FLEXI);
 	char* Plan_flexi_av80_av33 = suggestPlanFlexi(av80_av33,flexi_list_av80_av33, 4);
 	std::cout << std::string(Plan_flexi_av80_av33) << std::endl;
+
+
+	FlexiData flexi_tv39b_cr79_1 = { .edge = "Av. Nutibara >NorOccidente", .flow = 394.664181, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_tv39b_cr79_2 = { .edge = "Av. Nutibara >SurOriente", .flow = 344.590935, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_tv39b_cr79_3 = { .edge = "Carrera 79", .flow = 299.406864, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_tv39b_cr79_4 = { .edge = "Calle 41", .flow = 620.181812, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_list_tv39b_cr79[4] = { flexi_tv39b_cr79_3,  flexi_tv39b_cr79_2,  flexi_tv39b_cr79_1, flexi_tv39b_cr79_4 };
+
+
+	Mostro* tv39b_cr79 = createInstance("tv39b_cr79", DataSource::FLEXI);
+	char* Plan_flexi_tv39b_cr79 = suggestPlanFlexi(tv39b_cr79, flexi_list_tv39b_cr79, 4);
+	std::cout << std::string(Plan_flexi_tv39b_cr79) << std::endl;
+
 
 	FlexiData flexi_av33_cr66a_1 = { .edge = "Av. 33 >Occidente", .flow = 40.8 * 12, .speed = 11.0, .queue = 352.6 };
 	FlexiData flexi_av33_cr66a_2 = { .edge = "Carrera 65D >SurOccidente", .flow = 93.8 * 12, .speed = 6.7, .queue = 212.9 };

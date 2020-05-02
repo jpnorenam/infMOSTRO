@@ -56,8 +56,8 @@ bool Mostro::parseConfig(std::string json_path){
         max_euclid = json_value["avg_distance"].asDouble();
     }
     catch (int e) {
-        xsection_console->error(cFile + " couldn't be correctly initialized.");
-        xsection_logger->error(cFile + " couldn't be correctly initialized.");
+        xsection_console->error(cFile + " couldn't be correctly initialized, problem with file keys.");
+        xsection_logger->error(cFile + " couldn't be correctly initialized, problem with file keys.");
         return false;
     }
 
@@ -91,10 +91,23 @@ bool Mostro::parseConfig(std::string json_path){
         sIgnoreQ.push_back(json_value["ignore"]["queue"][i].asString());
 
     int nIgnore = nIgnoreF + nIgnoreS + nIgnoreQ;
-    if (source == FLEXI)
+    if (source == FLEXI) {
         input_vector.resize(1, nEdges * 3 + pSinks.size1() - nIgnore);
-    else if (source == ARS)
+        if (input_vector.size2() != nSpace) {
+            xsection_console->error(cFile + " couldn't be correctly initialized, dimensionality error.");
+            xsection_logger->error(cFile + " couldn't be correctly initialized, dimensionality error.");
+            return false;
+        }
+    }
+
+    else if (source == ARS) {
         input_vector.resize(1, nEdges * 2 + pSinks.size1() - nIgnore);
+        if (input_vector.size2() != nSpace) {
+            xsection_console->error(cFile + " couldn't be correctly initialized, dimensionality error.");
+            xsection_logger->error(cFile + " couldn't be correctly initialized, dimensionality error.");
+            return false;
+        }
+    }
 
     xsection_console->info(cFile + " was correctly initialized.");
     xsection_logger->info(cFile + " was correctly initialized.");
