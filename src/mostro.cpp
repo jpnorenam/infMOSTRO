@@ -109,7 +109,6 @@ std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     }
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
-        xsection_logger->error("can't suggest a plan without a correctly initialization.");
         return id + "/flexi/error-1";
     }
 
@@ -183,7 +182,6 @@ std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
 
     else {
         xsection_console->error("can't suggest a plan without a correctly initialization.");
-        xsection_logger->error("can't suggest a plan without a correctly initialization.");
         return id + "/ars/error-1";
     }
 
@@ -198,14 +196,14 @@ suggest:
             for (uint d = 0; d < nEdges; d++) {
                 if (ars_data[d].id == edges[e]) {
                     if (std::find(sIgnoreF.begin(), sIgnoreF.end(), edges[e]) == sIgnoreF.end()) {
-                        xsection_console->info("{0}.flow->{1:f} (v1/5min)", edges[e], ars_data[d].flow1);
-                        xsection_console->info("{0}.flow->{1:f} (v2/5min)", edges[e], ars_data[d].flow2);
-                        xsection_console->info("{0}.flow->{1:f} (v3/5min)", edges[e], ars_data[d].flow2);
+                        xsection_console->info("{0}.flow1->{1:f} (v1/5min)", edges[e], ars_data[d].flow1);
+                        xsection_console->info("{0}.flow2->{1:f} (v2/5min)", edges[e], ars_data[d].flow2);
+                        xsection_console->info("{0}.flow3->{1:f} (v3/5min)", edges[e], ars_data[d].flow2);
                         input_vector(0, e) = ars_data[d].flow1 + 2.0 * ars_data[d].flow2 + 2.5 * ars_data[d].flow3;
                         
                     }                       
                     if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end()) {
-                        xsection_console->info("{0}.flow->{1:f} (km/h)", edges[e], ars_data[d].speed);
+                        xsection_console->info("{0}.speed->{1:f} (km/h)", edges[e], ars_data[d].speed);
                         input_vector(0, nEdges - nIgnoreF + e) = ars_data[d].speed;
                     }
                     break;
