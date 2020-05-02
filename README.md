@@ -17,7 +17,7 @@
 
 ### Añadir variable de entorno
 
-`echo "export INFMOSTRO_HOME=/usr/local/etc/infmostro" >> ~/.bash_profile`\
+`echo 'export INFMOSTRO_HOME=/usr/local/etc/infmostro' >> ~/.bash_profile`\
 `source ~/.bashrc`
 
 ## Copyright

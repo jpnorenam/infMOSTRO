@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10.2)
 project(infMOSTRO CXX)
 
-set(PROJECT_AUTHOR "Laboratorio de Gestión de Sistemas en Tiempo Real")
+set(PROJECT_AUTHOR "Laboratorio de GestiÃ³n de Sistemas en Tiempo Real")
 set(PROJECT_COPYRIGHT "2020, Facultad de Minas, Universidad Nacional de Colombia")
-set(PROJECT_DESCRIPTION "C++ Recomedador de Planes Semaforicos para Secretaría de Movilidad Medellín")
+set(PROJECT_DESCRIPTION "C++ Recomedador de Planes Semaforicos para SecretarÃ­a de Movilidad MedellÃ­n")
 set(PROJECT_HOMEPAGE_URL "https://sites.google.com/unal.edu.co/lab-gstr/proyectos/moycot")
 set(PROJECT_VCS_URL "https://github.com/jpnorenam/infMOSTRO")
 
