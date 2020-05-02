@@ -119,6 +119,7 @@ suggest:
         return id + "/flexi/error-2";
     }
     else {
+        uint s = 0; uint q = 0;
         for (uint e = 0; e < nEdges; e++) {
             for (uint d = 0; d < nEdges; d++) {
                 if (flexi_data[d].edge == edges[e]) {
@@ -126,11 +127,13 @@ suggest:
                     input_vector(0, e) = flexi_data[d].flow;
                     if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end()) {
                         xsection_console->info("{0}.speed->{1:f} (km/h)", edges[e], flexi_data[d].speed);
-                        input_vector(0, 1 * nEdges + nSinks + e) = flexi_data[d].speed;
+                        input_vector(0, 1 * nEdges + nSinks + s) = flexi_data[d].speed;
+                        s++;
                     }
                     if (std::find(sIgnoreQ.begin(), sIgnoreQ.end(), edges[e]) == sIgnoreQ.end()) {
                         xsection_console->info("{0}.queue->{1:f} (m)", edges[e], flexi_data[d].queue);
-                        input_vector(0, 2 * nEdges + nSinks - nIgnoreS + e) = flexi_data[d].queue;
+                        input_vector(0, 2 * nEdges + nSinks - nIgnoreS + q) = flexi_data[d].queue;
+                        q++;
                     }
                     break;
                 }

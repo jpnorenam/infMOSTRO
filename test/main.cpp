@@ -4,20 +4,20 @@ int main()
 {
 
 	/******************************************** FLEXI EXAMPLES **************************************************************/
-	FlexiData flexi_cll44_cr84_1 = { .edge = "Av. San Juan >Oriente", .flow = 80.2 * 12, .speed = 8.9, .queue = 140.8 };
-	FlexiData flexi_cll44_cr84_2 = { .edge = "Av. San Juan >Occidente", .flow = 48.7 * 12, .speed = 11.0, .queue = 90.5 };
-	FlexiData flexi_cll44_cr84_3 = { .edge = "Carrera 84 >(N)", .flow = 100.1 * 12, .speed = 7.5, .queue = 96.3 };
-	FlexiData flexi_cll44_cr84_4 = { .edge = "Carrera 84 >(S)", .flow = 104.9 * 12, .speed = 6.7, .queue = 102.4 };
-	FlexiData flexi_list_cll44_cr84[4] = { flexi_cll44_cr84_3,  flexi_cll44_cr84_2,  flexi_cll44_cr84_1, flexi_cll44_cr84_4 };
+	FlexiData flexi_av80_av33_1 = { .edge = "Av. 80 >(S)", .flow = 1273.090896, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_av80_av33_2 = { .edge = "Av. 80 >(N)", .flow = 1192.149573, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_av80_av33_3 = { .edge = "Av. 33 >Occidente", .flow = 1042.085700, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_av80_av33_4 = { .edge = "Av. 33 >Oriente", .flow = 1042.085700, .speed = -1.0, .queue = -1.0 };
+	FlexiData flexi_list_av80_av33[4] = { flexi_av80_av33_3,  flexi_av80_av33_2,  flexi_av80_av33_1, flexi_av80_av33_4 };
 
 	//Mostro cll44_cr84 = Mostro("cll44_cr84", DataSource::FLEXI);
 	//std::string Plan_flexi_cll44_cr84 = cll44_cr84.suggestedPlan(flexi_list_cll44_cr84, 4);
 	//std::cout << Plan_flexi_cll44_cr84 << std::endl;
 
 
-	Mostro* cr66b_cll34b = createInstance("cr66b_cll34b", DataSource::FLEXI);
-	char* Plan_flexi_cll44_cr84 = suggestPlanFlexi(cr66b_cll34b,flexi_list_cll44_cr84, 4);
-	std::cout << std::string(Plan_flexi_cll44_cr84) << std::endl;
+	Mostro* av80_av33 = createInstance("av80_av33", DataSource::FLEXI);
+	char* Plan_flexi_av80_av33 = suggestPlanFlexi(av80_av33,flexi_list_av80_av33, 4);
+	std::cout << std::string(Plan_flexi_av80_av33) << std::endl;
 
 	FlexiData flexi_av33_cr66a_1 = { .edge = "Av. 33 >Occidente", .flow = 40.8 * 12, .speed = 11.0, .queue = 352.6 };
 	FlexiData flexi_av33_cr66a_2 = { .edge = "Carrera 65D >SurOccidente", .flow = 93.8 * 12, .speed = 6.7, .queue = 212.9 };
