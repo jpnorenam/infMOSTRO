@@ -45,4 +45,5 @@ bin/
 # logs
 *.log
 *.log.txt
+tmp/
 
