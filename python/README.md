@@ -2,14 +2,14 @@
 
 ## Requerimientos
 
-Python>=3.7.0\
-pip>=19.3.1
+*Python>=3.7.0\
+*pip>=19.3.1
 
 ### Dependencias
 `pip install -r requirments.txt`
 
 ### Uso
-Ejecutar `main.pyc` y seleccionar un archivo ejecutable valido de acuerdo a la documentación.
+Ejecutar `main.pyc` y seleccionar un archivo de configuración `*.yml` valido de acuerdo a la documentación.
 
 ## Copyright
 
