@@ -2,8 +2,8 @@
 
 ## Requerimientos
 
-*Python>=3.7.0\
-*pip>=19.3.1
+* Python>=3.7.0\
+* pip>=19.3.1
 
 ### Dependencias
 `pip install -r requirments.txt`
