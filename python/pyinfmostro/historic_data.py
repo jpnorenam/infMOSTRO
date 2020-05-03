@@ -89,7 +89,7 @@ def preprocess_data(host, start_date, end_date, xsection_name, datacarril_list, 
         if (datetime_1.hour != datetime_0.hour):
             timeline_progress(mktime_1 - init_mktime, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
             if (datetime_1.strftime('%Y/%m/%d') != datetime_0.strftime('%Y/%m/%d')):
-                input_dir = 'tmp/{}'.format(datetime_0.strftime('%Y/%m/%d'))
+                input_dir = 'tmp/{}/{}'.format(xsection_name, datetime_0.strftime('%Y/%m/%d'))
                 df_date = colapse_csv(input_dir, datacarril_list, csv_path)
         datetime_0 = datetime_1
     print('[pyinfmostro {}] {} was correctly modified'.format(xsection_name, csv_path))
