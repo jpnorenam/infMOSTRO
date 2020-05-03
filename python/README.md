@@ -1,14 +1,15 @@
 # pyinfMOSTRO
 
-## Requerimientos
+## Instalación
 
+### Requerimientos
 * Python>=3.7.0\
 * pip>=19.3.1
 
 ### Dependencias
 `pip install -r requirments.txt`
 
-### Uso
+## Uso
 Ejecutar `main.pyc` y seleccionar un archivo de configuración `*.yml` válido de acuerdo a la documentación.
 
 ## Copyright
