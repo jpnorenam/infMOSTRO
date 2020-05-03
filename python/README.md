@@ -17,7 +17,7 @@ Ejecutar `main.pyc` y seleccionar un archivo ejecutable valido de acuerdo a la d
 
 ## Contacto
 
-[![LGSTR Logo](docs/LGSTR_logo.png)](https://sites.google.com/unal.edu.co/lab-gstr/)
+[![LGSTR Logo](../docs/LGSTR_logo.png)](https://sites.google.com/unal.edu.co/lab-gstr/)
 
 - Juan Pablo Noreña <jpnorenam@unal.edu.co>
 - Andrés Felipe Acosta <afacostag@unal.edu.co>
