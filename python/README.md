@@ -2,26 +2,14 @@
 
 ## Requerimientos
 
-Python>=3.7.0
+Python>=3.7.0\
 pip>=19.3.1
 
 ### Dependencias
-`sudo apt install gcc g++ make cmake pkg-config`\
-`sudo apt install libjsoncpp-dev libboost-math-dev libspdlog-dev`
+`pip install -r requirments.txt`\
 
-### Compilación de la librería
-`git clone git@github.com:jpnorenam/infMOSTRO.git`\
-`cd infMOSTRO`\
-`mkdir build && cd build`\
-`cmake ..`\
-`make -j $(nproc)`\
-`sudo make install`\
-`ldconfig`
-
-### Añadir variable de entorno
-
-`echo "export INFMOSTRO_HOME=/usr/local/etc/infmostro" >> ~/.bash_profile`\
-`source ~/.bashrc`
+### Uso
+Ejecutar `main.pyc` y seleccionar un archivo ejecutable valido de acuerdo a la documentación.
 
 ## Copyright
 
