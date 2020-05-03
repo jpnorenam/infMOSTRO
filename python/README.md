@@ -9,6 +9,10 @@
 ### Dependencias
 `pip install -r requirments.txt`
 
+## Compilación
+
+python -m compileall -b .
+
 ## Uso
 Ejecutar `main.pyc` y seleccionar un archivo de configuración `*.yml` válido de acuerdo a la documentación.
 
