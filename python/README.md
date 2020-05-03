@@ -9,7 +9,7 @@
 `pip install -r requirments.txt`
 
 ### Uso
-Ejecutar `main.pyc` y seleccionar un archivo de configuración `*.yml` valido de acuerdo a la documentación.
+Ejecutar `main.pyc` y seleccionar un archivo de configuración `*.yml` válido de acuerdo a la documentación.
 
 ## Copyright
 
