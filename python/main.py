@@ -37,3 +37,5 @@ x, s, vh, means, labels, clabels, fv = svd_kmeans(xsection_name, datacarril_list
 plot_results(xsection_name, workspace_dir, x, s, vh, means, labels, clabels, fv)
 Fr, Fs = routes_flow(xsection_name, workspace_dir, fv, datacarril_list, conf_edges, conf_routes)
 opt_plans(xsection_name, Fr, Fs, conf_routes, conf_phases, workspace_dir)
+
+input("Press Enter to continue...")
