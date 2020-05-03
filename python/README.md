@@ -3,7 +3,7 @@
 ## Instalación
 
 ### Requerimientos
-* Python>=3.7.0\
+* Python>=3.7.0
 * pip>=19.3.1
 
 ### Dependencias
