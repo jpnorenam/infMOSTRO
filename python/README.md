@@ -9,7 +9,7 @@
 ### Dependencias
 `pip install -r requirments.txt`
 
-## Compilación
+### Compilación
 
 `python -m compileall -b .`
 
