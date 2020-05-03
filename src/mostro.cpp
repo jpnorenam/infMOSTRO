@@ -19,7 +19,7 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
 	id = xsection_id;
     source = data_source;
     isInit = false;
-    xsection_console = spdlog::stdout_color_mt(id+".console");
+    xsection_console = spdlog::stdout_color_mt(id + "." + std::to_string(source) +".console");
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + "] %v ***");
     xsection_console->info("initializing infMOSTRO.");
 
@@ -33,7 +33,7 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
     }
 
     if (access(cFile.c_str(), F_OK) != -1) {
-        xsection_logger = spdlog::basic_logger_mt(id + ".logger", cPath + id + ".log.txt");
+        xsection_logger = spdlog::basic_logger_mt(id + "." + std::to_string(source) + ".logger", cPath + id + ".log.txt");
         isInit = parseConfig(cFile);
     }
     else
