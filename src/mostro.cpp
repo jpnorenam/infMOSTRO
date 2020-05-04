@@ -19,7 +19,7 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
 	id = xsection_id;
     source = data_source;
     isInit = false;
-    xsection_console = spdlog::stdout_color_mt(id + "." + std::to_string(source) +".console");
+    xsection_console = spdlog::stdout_color_mt(id + std::to_string(source) +"-console");
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + "] %v ***");
     xsection_console->info("initializing infMOSTRO.");
 
@@ -32,13 +32,16 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
         cFile = cPath + id + ".json";
     }
 
-    if (access(cFile.c_str(), F_OK) != -1) {
-        xsection_logger = spdlog::basic_logger_mt(id + "." + std::to_string(source) + ".logger",
-            INFMOSTRO_HOME + "logs/" + id + "." + std::to_string(source) + ".log.txt");
+    xsection_logger = spdlog::basic_logger_mt(id + std::to_string(source) + "-logger",
+        INFMOSTRO_HOME + "logs/" + id + "-" + std::to_string(source) + "-log.txt");
+
+    if (access(cFile.c_str(), F_OK) != -1)
         isInit = parseConfig(cFile);
-    }
-    else
+    else {
         xsection_console->error("{0} doesn't exist.", cFile);
+        xsection_logger->error("{0} doesn't exist.", cFile);
+        xsection_logger->flush();
+    }
 }
 
 bool Mostro::parseConfig(std::string json_path){
@@ -59,6 +62,7 @@ bool Mostro::parseConfig(std::string json_path){
     catch (int e) {
         xsection_console->error(cFile + " couldn't be correctly initialized, problem with file keys.");
         xsection_logger->error(cFile + " couldn't be correctly initialized, problem with file keys.");
+        xsection_logger->flush();
         return false;
     }
 
@@ -97,6 +101,7 @@ bool Mostro::parseConfig(std::string json_path){
         if (input_vector.size2() != nSpace) {
             xsection_console->error(cFile + " couldn't be correctly initialized, dimensionality error.");
             xsection_logger->error(cFile + " couldn't be correctly initialized, dimensionality error.");
+            xsection_logger->flush();
             return false;
         }
     }
@@ -106,6 +111,7 @@ bool Mostro::parseConfig(std::string json_path){
         if (input_vector.size2() != nSpace) {
             xsection_console->error(cFile + " couldn't be correctly initialized, dimensionality error.");
             xsection_logger->error(cFile + " couldn't be correctly initialized, dimensionality error.");
+            xsection_logger->flush();
             return false;
         }
     }
@@ -130,6 +136,7 @@ suggest:
     if (dsize != nEdges) {
         xsection_console->error("the number of recived inputs ({0:d}) from flexi is incomplete.", dsize);
         xsection_logger->error("the number of recived inputs ({0:d}) from flexi is incomplete.", dsize);
+        xsection_logger->flush();
         return id + "/flexi/error-2";
     }
     else {
@@ -175,16 +182,19 @@ suggest:
         if (cdist < max_euclid) {
             xsection_console->info("recommends planC{0:d}", plan);
             xsection_logger->info("recommends planC{0:d}", plan);
+            xsection_logger->flush();
             return id + "/flexi/planC" + std::to_string(plan);
         }
         else if(cdist > max_euclid && cdist < max_euclid*3) {
             xsection_console->warn("uncertain recommendation of plan{0:d}", plan);
             xsection_logger->warn("uncertain recommendation of plan{0:d}", plan);
+            xsection_logger->flush();
             return id + "/flexi/planC" + std::to_string(plan);
         }
         else {
             xsection_console->error("the estimated fluxes by flexi are too far away from the known records");
             xsection_logger->error("the estimated fluxes by flexi are too far away from the known records");
+            xsection_logger->flush();
             return id + "/flexi/error-3";
         }
     }
