@@ -118,7 +118,7 @@ bool Mostro::parseConfig(std::string json_path){
 std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
     if (isInit) {
-        xsection_console->error("suggested plan called expecting {0:d} inputs, and {1:d} were sent.", nEdges, dsize);
+        xsection_console->info("suggested plan called expecting {0:d} inputs, and {1:d} were sent.", nEdges, dsize);
         goto suggest;
     }
     else {
@@ -193,7 +193,7 @@ suggest:
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
     if (isInit) {
-        xsection_console->error("suggested plan called expecting {0:d} inputs, and {1:d} were sent.", nEdges, dsize);
+        xsection_console->info("suggested plan called expecting {0:d} inputs, and {1:d} were sent.", nEdges, dsize);
         goto suggest;
     }
 
