@@ -34,7 +34,7 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
 
     if (access(cFile.c_str(), F_OK) != -1) {
         xsection_logger = spdlog::basic_logger_mt(id + "." + std::to_string(source) + ".logger",
-            INFMOSTRO_HOME + "logs/" + "." + std::to_string(source) + ".log.txt");
+            INFMOSTRO_HOME + "logs/" + id + "." + std::to_string(source) + ".log.txt");
         isInit = parseConfig(cFile);
     }
     else
