@@ -24,16 +24,17 @@ Mostro::Mostro(std::string xsection_id, DataSource data_source=DataSource::FLEXI
     xsection_console->info("initializing infMOSTRO.");
 
     if (source == FLEXI) {
-        cPath = INFMOSTRO_HOME + "/confs/" + id + "/flexi/";
+        cPath = INFMOSTRO_HOME + "confs/" + id + "/flexi/";
         cFile = cPath + id + ".json";
     }
     else if (source == ARS) {
-        cPath = INFMOSTRO_HOME + "/confs/" + id + "/ars/";
+        cPath = INFMOSTRO_HOME + "confs/" + id + "/ars/";
         cFile = cPath + id + ".json";
     }
 
     if (access(cFile.c_str(), F_OK) != -1) {
-        xsection_logger = spdlog::basic_logger_mt(id + "." + std::to_string(source) + ".logger", INFMOSTRO_HOME + "/logs/" + id + ".log.txt");
+        xsection_logger = spdlog::basic_logger_mt(id + "." + std::to_string(source) + ".logger",
+            INFMOSTRO_HOME + "logs/" + "." + std::to_string(source) + ".log.txt");
         isInit = parseConfig(cFile);
     }
     else
