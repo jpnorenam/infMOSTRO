@@ -3,9 +3,7 @@
   "edges": [
     "Av. San Juan >Oriente",
     "Av. San Juan >Occidente",
-    "Calle 43",
-    "Av_San_Juan_Oriente-f-SAL",
-    "Av_San_Juan_Occidente-f-SAL"
+    "Calle 43"
   ],
   "entries": {
     "Av_San_Juan_Oriente-f-ENT": "Av. San Juan >Oriente",
