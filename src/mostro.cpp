@@ -138,6 +138,7 @@ suggest:
     if (dsize != nEdges) {
         xsection_console->error("the number of recived inputs ({0:d}) from flexi differs from the expected ({1:d}) [ERROR-3].", dsize, nEdges);
         if (dsize != prev_dsize){
+            prev_dsize = dsize;
             xsection_logger->error("the number of recived inputs ({0:d}) from flexi differs from the expected ({1:d}) [ERROR-3].", dsize, nEdges);
             xsection_logger->flush();
         }
@@ -203,6 +204,7 @@ suggest:
     }
 out:
     if (prev_plan != rec_plan) {
+        prev_plan = rec_plan;
         if (rec_plan == id + "/flexi/error-4")
             xsection_logger->error("the estimated fluxes by flexi are too far away from the known records [ERROR-4].");
         xsection_logger->info("recommends {}", rec_plan);
@@ -227,6 +229,7 @@ suggest:
     if (dsize != nEdges) {
         xsection_console->error("the number of recived inputs ({0:d}) from ars differs from the expected ({1:d}) [ERROR-3].", dsize, nEdges);
         if (dsize != prev_dsize) {
+            prev_dsize = dsize;
             xsection_logger->error("the number of recived inputs ({0:d}) from ars differs from the expected ({1:d}) [ERROR-3].", dsize, nEdges);
             xsection_logger->flush();
         }
@@ -290,6 +293,7 @@ suggest:
     }
 out:
     if (prev_plan != rec_plan) {
+        prev_plan = rec_plan;
         if (rec_plan == id + "/ars/error-4")
             xsection_logger->error("the measured fluxes by ars are too far away from the known records [ERROR-4].");
         xsection_logger->info("recommends {}", rec_plan);
