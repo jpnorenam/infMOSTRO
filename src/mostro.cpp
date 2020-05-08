@@ -125,7 +125,7 @@ bool Mostro::parseConfig(std::string json_path){
  
 std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
     std::string rec_plan = "";
-    spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
+    spdlog::set_pattern("*** [%Y-%m-%d %H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
     if (isInit)
         goto suggest;
     else {
@@ -136,9 +136,9 @@ std::string Mostro::suggestedPlan(FlexiData flexi_data[], uint dsize){
 
 suggest:
     if (dsize != nEdges) {
+        prev_dsize = dsize;
         xsection_console->error("the number of recived inputs ({0:d}) from flexi differs from the expected ({1:d}) [ERROR-3].", dsize, nEdges);
         if (dsize != prev_dsize){
-            prev_dsize = dsize;
             xsection_logger->error("the number of recived inputs ({0:d}) from flexi differs from the expected ({1:d}) [ERROR-3].", dsize, nEdges);
             xsection_logger->flush();
         }
@@ -215,7 +215,7 @@ out:
 
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     std::string rec_plan = "";
-    spdlog::set_pattern("*** [%H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
+    spdlog::set_pattern("*** [%Y-%m-%d %H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
     if (isInit)
         goto suggest;
 
