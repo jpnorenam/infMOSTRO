@@ -215,7 +215,7 @@ out:
 
 std::string Mostro::suggestedPlan(ArsData ars_data[], uint dsize) {
     std::string rec_plan = "";
-    spdlog::set_pattern("*** [%Y-%m-%d %H:%M:%S] [infMOSTRO." + id + ".flexi] %v ***");
+    spdlog::set_pattern("*** [%Y-%m-%d %H:%M:%S] [infMOSTRO." + id + ".ars] %v ***");
     if (isInit)
         goto suggest;
 
