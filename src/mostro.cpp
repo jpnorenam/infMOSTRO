@@ -153,13 +153,15 @@ suggest:
                     xsection_console->info("{0}.flow->{1:f} (v/h)", edges[e], flexi_data[d].flow);
                     input_vector(0, e) = flexi_data[d].flow;
                     if (std::find(sIgnoreS.begin(), sIgnoreS.end(), edges[e]) == sIgnoreS.end()) {
-                        xsection_console->info("{0}.speed->{1:f} (km/h)", edges[e], flexi_data[d].speed);
-                        input_vector(0, 1 * nEdges + nSinks + s) = flexi_data[d].speed;
+                        double fspeed  = flexi_data[d].speed == -1 ? 35.0 : flexi_data[d].speed;
+                        xsection_console->info("{0}.speed->{1:f} (km/h)", edges[e], fspeed);
+                        input_vector(0, 1 * nEdges + nSinks + s) = fspeed;
                         s++;
                     }
                     if (std::find(sIgnoreQ.begin(), sIgnoreQ.end(), edges[e]) == sIgnoreQ.end()) {
-                        xsection_console->info("{0}.queue->{1:f} (m)", edges[e], flexi_data[d].queue);
-                        input_vector(0, 2 * nEdges + nSinks - nIgnoreS + q) = flexi_data[d].queue;
+                        double fqueue = flexi_data[d].queue == -1 ? 15.0 : flexi_data[d].queue;
+                        xsection_console->info("{0}.queue->{1:f} (m)", edges[e], fqueue);
+                        input_vector(0, 2 * nEdges + nSinks - nIgnoreS + q) = fqueue;
                         q++;
                     }
                     break;
