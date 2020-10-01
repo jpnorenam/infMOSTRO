@@ -128,10 +128,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#Visual studio
+# Visual studio
 .vs/
 
-#tmp
+# Visual code
+.vscode/
+
+# tmp
 tmp/
 data/
 dist/

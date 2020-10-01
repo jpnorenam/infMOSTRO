@@ -42,6 +42,9 @@ bin/
 *.vcxproj
 *.vcxproj.user
 
+# Visual Studio
+.vscode/
+
 # logs
 *.log
 *.log.txt
