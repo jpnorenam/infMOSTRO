@@ -1,0 +1,129 @@
+## copyright 2020 Universidad Nacional de Colombia,
+## Laboratorio de Gestion de Sistemas en Tiempo Real
+##
+## Licencia,
+## otorgada a Secretaria de Movilidad de Medellin
+######################################################
+##
+##
+## Descomentar esto para descargar datos nuevos
+append_historical:
+  host: "168.176.124.56:9200"
+  start_date: "2019-10-02"
+  end_date: "2019-10-03"
+  delete_source: false
+## Dejar vació cuando la fuente es ars
+  index: "unal-flexi"
+##
+##
+## Informacion general de la interseccion
+## xsection.source debe ser ars o flexi
+xsection.source: "flexi"
+xsection.name: "cll44_cr65"
+xsection.workspace: "./data/cll44_cr65/flexi/"
+xsection.edges:
+  - name: "Av. San Juan >Oriente"
+    entry: true
+    datacarril:
+      - "Av. San Juan >Oriente"
+  - name: "Av. San Juan >Occidente"
+    entry: true
+    datacarril:
+      - "Av. San Juan >Occidente"
+  - name: "Carrera 65 >(N)"
+    entry: true
+    datacarril:
+      - "Carrera 65 >(N)"
+  - name: "Av. San Juan >Oriente"
+    entry: false
+    datacarril:
+      - "Av. San Juan >Oriente"
+  - name: "Av. San Juan >Occidente"
+    entry: false
+    datacarril:
+      - "Av. San Juan >Occidente"
+  - name: "Carrera 65 >(N)"
+    entry: false
+    datacarril:
+      - "Carrera 65 >(N)"
+##
+## Rutas internas de la interseccion
+xsection.routes:
+  - origin: "Carrera 65 >(N)"
+    lenght: 63
+    destiny: "Av. San Juan >Oriente"
+    sink_rate: 1000
+    lanes: 1
+    green_phases:
+      - 4
+      - 5
+      - 6
+    sink_phi: 0.21
+  - origin: "Carrera 65 >(N)"
+    lenght: 63
+    destiny: "Av. San Juan >Occidente"
+    sink_rate: 1000
+    lanes: 1
+    green_phases:
+      - 6
+    sink_phi: 0.43
+  - origin: "Carrera 65 >(N)"
+    lenght: 63
+    destiny: "Carrera 65 >(N)"
+    sink_rate: 1800
+    lanes: 2
+    green_phases:
+      - 4
+      - 5
+      - 6
+    sink_phi: 0.36
+  - origin: "Av. San Juan >Oriente"
+    lenght: 300
+    destiny: "Av. San Juan >Oriente"
+    sink_rate: 1800
+    lanes: 4
+    green_phases:
+      - 1
+      - 2
+    sink_phi: 1.0
+  - origin: "Av. San Juan >Occidente"
+    lenght: 102
+    destiny: "Av. San Juan >Occidente"
+    sink_rate: 1800
+    lanes: 4
+    green_phases:
+      - 1
+      - 2
+    sink_phi: 0.55
+  - origin: "Av. San Juan >Occidente"
+    lenght: 102
+    destiny: "Carrera 65 >(N)"
+    sink_rate: 1000
+    lanes: 1
+    green_phases:
+      - 1
+    sink_phi: 0.45
+##
+## Fases del planeamiento semaforico
+xsection.phases:
+  - id: 1
+    min_value: 13
+    max_value: 120
+  - id: 2
+    min_value: 20
+    max_value: 20
+  - id: 3
+    min_value: 1
+    max_value: 1
+  - id: 4
+    min_value: 16
+    max_value: 16
+  - id: 5
+    min_value: 2
+    max_value: 2
+  - id: 6
+    min_value: 13
+    max_value: 120
+  - id: 7
+    min_value: 2
+    max_value: 2

@@ -2,7 +2,7 @@ import sys
 import yaml
 import tkinter as tk
 from tkinter import filedialog
-from pyinfmostro.historic_data import preprocess_data
+from pyinfmostro.historic_data import preprocess_data_flexi, preprocess_data_ars
 from pyinfmostro.svd_kmeans import svd_kmeans
 from pyinfmostro.svd_kmeans import plot_results
 from pyinfmostro.least_squares import routes_flow
@@ -29,7 +29,12 @@ if 'append_historical' in conf:
     host = conf['append_historical']['host']
     start_date = conf['append_historical']['start_date']
     end_date = conf['append_historical']['end_date']
-    preprocess_data(host, start_date, end_date, xsection_name, datacarril_list, workspace_dir)
+    source = conf['xsection.source']
+    index = conf['append_historical']['index']
+    if(source == 'ars'):
+        preprocess_data_ars(host, start_date, end_date, xsection_name, datacarril_list, workspace_dir)
+    elif(source == 'flexi'):
+        preprocess_data_flexi(host, source, index, start_date, end_date, xsection_name, datacarril_list, workspace_dir)
 else:
     print('[pyinfmostro {}] skipping append data, working with {} as it is.'.format(xsection_name, '{}{}.csv'.format(workspace_dir,xsection_name)))
 

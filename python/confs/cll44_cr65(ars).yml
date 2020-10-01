@@ -1,0 +1,137 @@
+## copyright 2020 Universidad Nacional de Colombia,
+## Laboratorio de Gestion de Sistemas en Tiempo Real
+##
+## Licencia,
+## otorgada a Secretaria de Movilidad de Medellin
+######################################################
+## Descomentar esto para descargar datos nuevos de ARS
+append_historical:
+  host: "http://181.129.51.43:9600"
+  start_date: "2020-04-23"
+  end_date: "2020-04-30"
+  delete_source: false
+## Dejar vació cuando la fuente es flexi
+  index:
+##
+##
+## Informacion general de la interseccion
+## xsection.source debe ser ars o flexi
+xsection.source: "ars"
+xsection.name: "cll44_cr65"
+xsection.workspace: "./data/cll44_cr65/ars/"
+xsection.edges:
+  - name: "Av. San Juan >Oriente"
+    entry: false
+    datacarril:
+      - "XC-1-JUAN-65-SAL:OCC-ORI 1"
+      - "XC-2-JUAN-65-SAL:OCC-ORI 1"
+      - "XC-1-JUAN-65-SAL:OCC-ORI 2"
+      - "XC-2-JUAN-65-SAL:OCC-ORI 2"
+  - name: "Carrera 65 >(N)"
+    entry: true
+    datacarril:
+      - "XC-1-JUAN-65-ENT:SUR-NOR"
+      - "XC-2-JUAN-65-ENT:SUR-NOR"
+      - "XC-3-JUAN-65-ENT:SUR-NOR"
+  - name: "Av. San Juan >Oriente"
+    entry: true
+    datacarril:
+      - "XC-1-JUAN-65-ENT:OCC-ORI 1"
+      - "XC-2-JUAN-65-ENT:OCC-ORI 1"
+      - "XC-1-JUAN-65-ENT:OCC-ORI 2"
+      - "XC-2-JUAN-65-ENT:OCC-ORI 2"
+  - name: "Av. San Juan >Occidente"
+    entry: false
+    datacarril:
+      - "XC-1-JUAN-65-SAL:ORI-OCC 1"
+      - "XC-2-JUAN-65-SAL:ORI-OCC 1"
+      - "XC-1-JUAN-65-SAL:ORI-OCC 2"
+      - "XC-2-JUAN-65-SAL:ORI-OCC 2"
+  - name: "Carrera 65 >(N)"
+    entry: false
+    datacarril:
+      - "XC-1-JUAN-65-SAL:SUR-NOR"
+      - "XC-2-JUAN-65-SAL:SUR-NOR"
+      - "XC-3-JUAN-65-SAL:SUR-NOR"
+  - name: "Av. San Juan >Occidente"
+    entry: true
+    datacarril:
+      - "XC-1-JUAN-65-ENT:ORI-OCC 1"
+      - "XC-2-JUAN-65-ENT:ORI-OCC 1"
+      - "XC-1-JUAN-65-ENT:ORI-OCC 2"
+      - "XC-2-JUAN-65-ENT:ORI-OCC 2"
+##
+## Rutas internas de la interseccion
+xsection.routes:
+  - origin: "Carrera 65 >(N)"
+    lenght: 63
+    destiny: "Av. San Juan >Oriente"
+    sink_rate: 1000
+    lanes: 1
+    green_phases:
+      - 4
+      - 5
+      - 6
+  - origin: "Carrera 65 >(N)"
+    lenght: 63
+    destiny: "Av. San Juan >Occidente"
+    sink_rate: 1000
+    lanes: 1
+    green_phases:
+      - 6
+  - origin: "Carrera 65 >(N)"
+    lenght: 63
+    destiny: "Carrera 65 >(N)"
+    sink_rate: 1800
+    lanes: 2
+    green_phases:
+      - 4
+      - 5
+      - 6
+  - origin: "Av. San Juan >Oriente"
+    lenght: 300
+    destiny: "Av. San Juan >Oriente"
+    sink_rate: 1800
+    lanes: 4
+    green_phases:
+      - 1
+      - 2
+  - origin: "Av. San Juan >Occidente"
+    lenght: 102
+    destiny: "Av. San Juan >Occidente"
+    sink_rate: 1800
+    lanes: 4
+    green_phases:
+      - 1
+      - 2
+  - origin: "Av. San Juan >Occidente"
+    lenght: 102
+    destiny: "Carrera 65 >(N)"
+    sink_rate: 1000
+    lanes: 1
+    green_phases:
+      - 1
+##
+## Fases del planeamiento semaforico
+xsection.phases:
+  - id: 1
+    min_value: 13
+    max_value: 120
+  - id: 2
+    min_value: 20
+    max_value: 20
+  - id: 3
+    min_value: 1
+    max_value: 1
+  - id: 4
+    min_value: 16
+    max_value: 16
+  - id: 5
+    min_value: 2
+    max_value: 2
+  - id: 6
+    min_value: 13
+    max_value: 120
+  - id: 7
+    min_value: 2
+    max_value: 2

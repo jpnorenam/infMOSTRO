@@ -5,6 +5,8 @@ import json
 import datetime as dt
 import pandas as pd
 import numpy as np
+from elasticsearch import Elasticsearch
+from pandasticsearch import Select
 
 def query_formatter(host, datacarril_list, start_mktime, end_mktime):
     carriles_query = []
@@ -23,7 +25,7 @@ def query_formatter(host, datacarril_list, start_mktime, end_mktime):
             '%22filter%22:%20[],%22should%22:%20[],%22must_not%22:%20[]}}}')
     return query_url
 
-def colapse_csv(input_dir, datacarril_list, output_path):
+def colapse_csv_ars(input_dir, datacarril_list, output_path):
     carril_flowlist = [carril + '.F' for carril in datacarril_list]
     carril_speedlist = [carril + '.S' for carril in datacarril_list]
     timeline = np.arange(0, 1440, 5)
@@ -62,14 +64,15 @@ def timeline_progress(iteration, total, prefix = '', suffix = '', decimals = 1, 
     if iteration == total: 
         print()
 
-def preprocess_data(host, start_date, end_date, xsection_name, datacarril_list, workspace):
-    csv_path = workspace + xsection_name + '.csv'
+def preprocess_data_ars(host, start_date, end_date, xsection_name, datacarril_list, workspace):
+    csv_path = os.path.join(workspace, xsection_name + '.csv')
     datetime_0 = dt.datetime.strptime(start_date, '%Y-%m-%d')
     datetime_1 = dt.datetime.strptime(start_date, '%Y-%m-%d')
     datetime_end = dt.datetime.strptime(end_date, '%Y-%m-%d')
     init_date = datetime_0.day
     init_mktime = time.mktime(datetime_0.timetuple())
     total_timeline = time.mktime(datetime_end.timetuple()) - init_mktime
+
     http = urllib3.PoolManager()
     timeline_progress(0, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
     while datetime_0 < datetime_end:
@@ -90,7 +93,54 @@ def preprocess_data(host, start_date, end_date, xsection_name, datacarril_list, 
             timeline_progress(mktime_1 - init_mktime, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
             if (datetime_1.strftime('%Y/%m/%d') != datetime_0.strftime('%Y/%m/%d')):
                 input_dir = 'tmp/{}/{}'.format(xsection_name, datetime_0.strftime('%Y/%m/%d'))
-                df_date = colapse_csv(input_dir, datacarril_list, csv_path)
+                df_date = colapse_csv_ars(input_dir, datacarril_list, csv_path)
         datetime_0 = datetime_1
     print('[pyinfmostro {}] {} was correctly modified'.format(xsection_name, csv_path))
 
+def preprocess_data_flexi(host, source, index, start_date, end_date, xsection_name, datacarril_list, workspace):
+    csv_path = os.path.join(workspace, xsection_name + '.csv')
+    datetime_0 = dt.datetime.strptime(start_date, '%Y-%m-%d')
+    datetime_1 = dt.datetime.strptime(start_date, '%Y-%m-%d')
+    datetime_end = dt.datetime.strptime(end_date, '%Y-%m-%d')
+    init_date = datetime_0.day
+    init_mktime = time.mktime(datetime_0.timetuple())
+    total_timeline = time.mktime(datetime_end.timetuple()) - init_mktime
+    
+    es = Elasticsearch([host], timeout=600)
+    timeline_progress(0, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
+    while datetime_0 < datetime_end:
+        datetime_1 = datetime_0 + dt.timedelta(minutes=3600)
+        res_path = 'tmp/{}/{}.json'.format(xsection_name, datetime_0.strftime('%Y/%m/%d/%H-%M'))
+        if not os.path.exists(res_path):
+            query = es.search(index=index, 
+                        body = {
+                            "query": {
+                                    "bool": {
+                                        "must": [               
+                                            { "range":
+                                                {"@timestamp": {
+                                                    "time_zone": "-05:00",
+                                                    "gte": datetime_0.strftime('%Y-%m-%dT%H:%M:%S'),
+                                                    "lte": datetime_1.strftime('%Y-%m-%dT%H:%M:%S')
+                                                    }
+                                                }
+                                            },
+                                            { "match_phrase": { "junction": xsection_name } },
+                                        ]
+                                    }
+                                }
+                            }, size=10000)
+            query = Select.from_dict(query).to_pandas()
+            res = json.loads(http.request('GET', query).data)
+            if not os.path.exists(os.path.dirname(res_path)):
+                os.makedirs(os.path.dirname(res_path))
+            with open(res_path, 'w') as res_file:
+                json.dump(res, res_file)
+
+        if (datetime_1.hour != datetime_0.hour):
+            timeline_progress(mktime_1 - init_mktime, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
+            if (datetime_1.strftime('%Y/%m/%d') != datetime_0.strftime('%Y/%m/%d')):
+                input_dir = 'tmp/{}/{}'.format(xsection_name, datetime_0.strftime('%Y/%m/%d'))
+                df_date = colapse_csv(input_dir, datacarril_list, csv_path)
+        datetime_0 = datetime_1
+    print('[pyinfmostro {}] {} was correctly modified'.format(xsection_name, csv_path))
