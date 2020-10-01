@@ -56,6 +56,39 @@ def colapse_csv_ars(input_dir, datacarril_list, output_path):
     else:
         df.to_csv(output_path, sep=',', index=False, encoding='utf8', mode='a', header=False)
 
+
+def colapse_csv_flexi(input_dir, datacarril_list, conf_routes, output_path):
+    timeline = np.arange(0, 1440, 5)
+    nbins = len(timeline) 
+    datetime_info = ['Index', 'Timestamp', 'Day', 'Hour']
+    df = pd.DataFrame(columns = (datetime_info + datacarril_list))
+    df.set_index('Index')
+    df['Index'] = range(nbins)
+    for r, d, f in os.walk(input_dir):
+        for file in f:
+            with open(r + '/' + file) as json_file: 
+                json_data = json.load(json_file)
+            json_data = json_data['hits'] if 'hits' in json_data else []
+            for hit in json_data:
+                data_ = hit['_source']
+                timestamp_ = dt.datetime.strptime(data_['TimeStamp'], "%Y-%m-%dT%H:%M:%S.%f")
+                bin_ = np.digitize(timestamp_.hour * 60 + timestamp_.minute, timeline)
+                df.loc[bin_,'Timestamp'] = timestamp_.strftime("%Y-%m-%dT%H:%M")
+                df.loc[bin_,'Day'] = timestamp_.weekday()
+                df.loc[bin_,'Hour'] = timestamp_.hour + timestamp_.minute / 60
+                df.loc[bin_,data_['id']] = data_['flow'] / 12
+    for route in conf_routes:
+        df[route['destiny']] = df.fillna(0)[route['destiny']] + df.fillna(0)[route['origin']] * route['sink_phi']
+    df = df.dropna()
+    del df["Index"]
+    if not os.path.exists(os.path.dirname(output_path)):
+        os.makedirs(os.path.dirname(output_path))
+    if not os.path.exists(output_path):
+        df.to_csv(output_path, sep=',', index=False, encoding='utf8')
+    else:
+        df.to_csv(output_path, sep=',', index=False, encoding='utf8', mode='a', header=False)
+
+
 def timeline_progress(iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
@@ -79,7 +112,7 @@ def preprocess_data_ars(host, start_date, end_date, xsection_name, datacarril_li
         datetime_1 = datetime_0 + dt.timedelta(minutes=5)
         mktime_0 = int(time.mktime(datetime_0.timetuple()))
         mktime_1 = int(time.mktime(datetime_1.timetuple()))
-        res_path = 'tmp/{}/{}.json'.format(xsection_name, datetime_0.strftime('%Y/%m/%d/%H-%M'))
+        res_path = 'tmp/{}/ars/{}.json'.format(xsection_name, datetime_0.strftime('%Y/%m/%d/%H-%M'))
 
         if not os.path.exists(res_path):
             query = query_formatter(host, datacarril_list, mktime_0 * 1000, mktime_1 * 1000)
@@ -92,12 +125,12 @@ def preprocess_data_ars(host, start_date, end_date, xsection_name, datacarril_li
         if (datetime_1.hour != datetime_0.hour):
             timeline_progress(mktime_1 - init_mktime, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
             if (datetime_1.strftime('%Y/%m/%d') != datetime_0.strftime('%Y/%m/%d')):
-                input_dir = 'tmp/{}/{}'.format(xsection_name, datetime_0.strftime('%Y/%m/%d'))
+                input_dir = 'tmp/{}/ars/{}'.format(xsection_name, datetime_0.strftime('%Y/%m/%d'))
                 df_date = colapse_csv_ars(input_dir, datacarril_list, csv_path)
         datetime_0 = datetime_1
     print('[pyinfmostro {}] {} was correctly modified'.format(xsection_name, csv_path))
 
-def preprocess_data_flexi(host, source, index, start_date, end_date, xsection_name, datacarril_list, workspace):
+def preprocess_data_flexi(host, source, index, start_date, end_date, xsection_name, datacarril_list, conf_routes, workspace):
     csv_path = os.path.join(workspace, xsection_name + '.csv')
     datetime_0 = dt.datetime.strptime(start_date, '%Y-%m-%d')
     datetime_1 = dt.datetime.strptime(start_date, '%Y-%m-%d')
@@ -109,10 +142,12 @@ def preprocess_data_flexi(host, source, index, start_date, end_date, xsection_na
     es = Elasticsearch([host], timeout=600)
     timeline_progress(0, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
     while datetime_0 < datetime_end:
-        datetime_1 = datetime_0 + dt.timedelta(minutes=3600)
-        res_path = 'tmp/{}/{}.json'.format(xsection_name, datetime_0.strftime('%Y/%m/%d/%H-%M'))
+        datetime_1 = datetime_0 + dt.timedelta(minutes=15)
+        mktime_0 = int(time.mktime(datetime_0.timetuple()))
+        mktime_1 = int(time.mktime(datetime_1.timetuple()))
+        res_path = 'tmp/{}/flexi/{}.json'.format(xsection_name, datetime_0.strftime('%Y/%m/%d/%H-%M'))
         if not os.path.exists(res_path):
-            query = es.search(index=index, 
+            res = es.search(index=index, 
                         body = {
                             "query": {
                                     "bool": {
@@ -130,17 +165,16 @@ def preprocess_data_flexi(host, source, index, start_date, end_date, xsection_na
                                     }
                                 }
                             }, size=10000)
-            query = Select.from_dict(query).to_pandas()
-            res = json.loads(http.request('GET', query).data)
             if not os.path.exists(os.path.dirname(res_path)):
                 os.makedirs(os.path.dirname(res_path))
             with open(res_path, 'w') as res_file:
-                json.dump(res, res_file)
+                json.dump(res['hits'], res_file)
+            query = Select.from_dict(res).to_pandas()
 
         if (datetime_1.hour != datetime_0.hour):
             timeline_progress(mktime_1 - init_mktime, total_timeline, prefix = '[pyinfmostro {}] timeline data preprocessed:'.format(xsection_name), suffix = 'completed', length = 50)
             if (datetime_1.strftime('%Y/%m/%d') != datetime_0.strftime('%Y/%m/%d')):
-                input_dir = 'tmp/{}/{}'.format(xsection_name, datetime_0.strftime('%Y/%m/%d'))
-                df_date = colapse_csv(input_dir, datacarril_list, csv_path)
+                input_dir = 'tmp/{}/flexi/{}'.format(xsection_name, datetime_0.strftime('%Y/%m/%d'))
+                df_date = colapse_csv_flexi(input_dir, datacarril_list, conf_routes, csv_path)
         datetime_0 = datetime_1
     print('[pyinfmostro {}] {} was correctly modified'.format(xsection_name, csv_path))

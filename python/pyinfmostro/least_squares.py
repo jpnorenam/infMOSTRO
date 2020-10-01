@@ -4,20 +4,31 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 
-def routes_flow(xsection_name, workspace_dir, fv, datacarriles_list, edges_dict, routes_dict):
+def routes_flow(xsection_name, source, workspace_dir, fv, datacarriles_list, edges_dict, routes_dict):
     print("[pyinfmostro {}] reconciling measurement errors and balancing routes demand.".format(xsection_name))
     edges = {}
     edges_entries = []; edges_sinks = []
     entries = 0; sinks = 0
-    for edge in edges_dict:
-        if edge["entry"]:
-            edges[edge["name"]+"-ENT"] = [datacarriles_list.index(datacarril) for datacarril in edge["datacarril"]]
-            edges_entries.append(edge["name"]+"-ENT")
-            entries += 1
-        if not edge["entry"]:
-            edges[edge["name"]+"-SAL"] = [datacarriles_list.index(datacarril) for datacarril in edge["datacarril"]]
-            edges_sinks.append(edge["name"]+"-SAL")
-            sinks += 1
+    if (source=='ars'):
+        for edge in edges_dict:
+            if edge["entry"]:
+                edges[edge["name"]+"-ENT"] = [datacarriles_list.index(datacarril) for datacarril in edge["datacarril"]]
+                edges_entries.append(edge["name"]+"-ENT")
+                entries += 1
+            if not edge["entry"]:
+                edges[edge["name"]+"-SAL"] = [datacarriles_list.index(datacarril) for datacarril in edge["datacarril"]]
+                edges_sinks.append(edge["name"]+"-SAL")
+                sinks += 1
+    elif (source=='flexi'):
+        for edge in edges_dict:
+            if edge["entry"]:
+                edges[edge["name"]] = [datacarriles_list.index(datacarril) for datacarril in edge["datacarril"]]
+                edges_entries.append(edge["name"])
+                entries += 1
+            if not edge["entry"]:
+                edges[edge["name"]] = [datacarriles_list.index(datacarril) for datacarril in edge["datacarril"]]
+                edges_sinks.append(edge["name"])
+                sinks += 1
     edges_order = edges_entries + edges_sinks
     origins = {}
     destinies = {}
@@ -54,8 +65,11 @@ def routes_flow(xsection_name, workspace_dir, fv, datacarriles_list, edges_dict,
         for entry in origins:
             for sink in origins[entry]:
                 columns.append(entry + '=>' + sink)
-                entries_matrix[nentry, nphi] = M[edges_order.index(entry+"-ENT")]
-                rE.append(M[edges_order.index(sink+"-SAL")])
+                entries_matrix[nentry, nphi] = M[edges_order.index(entry+"-ENT")] if source == 'ars' else M[edges_order.index(sink)]
+                if source=='ars':
+                    rE.append(M[edges_order.index(sink+"-SAL")])
+                elif source=='flexi':
+                    rE.append(M[edges_order.index(sink)])
                 nphi += 1
             entries_matrix[nentry, entries + sinks + nentry] = M[-1]
             nentry += 1
@@ -66,7 +80,7 @@ def routes_flow(xsection_name, workspace_dir, fv, datacarriles_list, edges_dict,
         nsink = 0
         for sink in destinies:
             for entry in destinies[sink]:
-                sinks_matrix[entries + nsink, nphi] = M[edges_order.index(sink+"-SAL")]
+                sinks_matrix[entries + nsink, nphi] = M[edges_order.index(sink+"-SAL")] if source == 'ars' else M[edges_order.index(sink)]
                 nphi += 1
             sinks_matrix[-1, entries + sinks + nsink] = M[-1]
             nsink += 1

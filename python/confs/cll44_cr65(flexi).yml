@@ -10,7 +10,7 @@
 append_historical:
   host: "168.176.124.56:9200"
   start_date: "2019-10-02"
-  end_date: "2019-10-03"
+  end_date: "2019-10-08"
   delete_source: false
 ## Dejar vació cuando la fuente es ars
   index: "unal-flexi"
@@ -34,24 +34,24 @@ xsection.edges:
     entry: true
     datacarril:
       - "Carrera 65 >(N)"
-  - name: "Av. San Juan >Oriente"
+  - name: "Av. San Juan >Oriente.S"
     entry: false
     datacarril:
-      - "Av. San Juan >Oriente"
-  - name: "Av. San Juan >Occidente"
+      - "Av. San Juan >Oriente.S"
+  - name: "Av. San Juan >Occidente.S"
     entry: false
     datacarril:
-      - "Av. San Juan >Occidente"
-  - name: "Carrera 65 >(N)"
+      - "Av. San Juan >Occidente.S"
+  - name: "Carrera 65 >(N).S"
     entry: false
     datacarril:
-      - "Carrera 65 >(N)"
+      - "Carrera 65 >(N).S"
 ##
 ## Rutas internas de la interseccion
 xsection.routes:
   - origin: "Carrera 65 >(N)"
     lenght: 63
-    destiny: "Av. San Juan >Oriente"
+    destiny: "Av. San Juan >Oriente.S"
     sink_rate: 1000
     lanes: 1
     green_phases:
@@ -61,7 +61,7 @@ xsection.routes:
     sink_phi: 0.21
   - origin: "Carrera 65 >(N)"
     lenght: 63
-    destiny: "Av. San Juan >Occidente"
+    destiny: "Av. San Juan >Occidente.S"
     sink_rate: 1000
     lanes: 1
     green_phases:
@@ -69,7 +69,7 @@ xsection.routes:
     sink_phi: 0.43
   - origin: "Carrera 65 >(N)"
     lenght: 63
-    destiny: "Carrera 65 >(N)"
+    destiny: "Carrera 65 >(N).S"
     sink_rate: 1800
     lanes: 2
     green_phases:
@@ -79,7 +79,7 @@ xsection.routes:
     sink_phi: 0.36
   - origin: "Av. San Juan >Oriente"
     lenght: 300
-    destiny: "Av. San Juan >Oriente"
+    destiny: "Av. San Juan >Oriente.S"
     sink_rate: 1800
     lanes: 4
     green_phases:
@@ -88,7 +88,7 @@ xsection.routes:
     sink_phi: 1.0
   - origin: "Av. San Juan >Occidente"
     lenght: 102
-    destiny: "Av. San Juan >Occidente"
+    destiny: "Av. San Juan >Occidente.S"
     sink_rate: 1800
     lanes: 4
     green_phases:
@@ -97,7 +97,7 @@ xsection.routes:
     sink_phi: 0.55
   - origin: "Av. San Juan >Occidente"
     lenght: 102
-    destiny: "Carrera 65 >(N)"
+    destiny: "Carrera 65 >(N).S"
     sink_rate: 1000
     lanes: 1
     green_phases:
