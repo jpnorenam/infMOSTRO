@@ -1,0 +1,63 @@
+xsection.source: flexi
+xsection.name: cll44_cr80a
+xsection.workspace: ./data/cll44_cr80a/flexi/
+xsection.edges:
+- name: Av. San Juan >Oriente
+  entry: true
+  datacarril:
+  - Av. San Juan >Oriente
+- name: Av. San Juan >Occidente
+  entry: true
+  datacarril:
+  - Av. San Juan >Occidente
+- name: Calle 43
+  entry: true
+  datacarril:
+  - Calle 43
+- name: Av. San Juan >Oriente.S
+  entry: false
+  datacarril:
+  - Av. San Juan >Oriente.S
+- name: Av. San Juan >Occidente.S
+  entry: false
+  datacarril:
+  - Av. San Juan >Occidente.S
+xsection.routes:
+- origin: Av. San Juan >Oriente
+  lenght: 96
+  destiny: Av. San Juan >Oriente.S
+  sink_rate: 1600
+  lanes: 3
+  green_phases:
+  - 3
+  sink_phi: 1.0
+- origin: Av. San Juan >Occidente
+  lenght: 90
+  destiny: Av. San Juan >Occidente.S
+  sink_rate: 1000
+  lanes: 3
+  green_phases:
+  - 3
+  sink_phi: 1.0
+- origin: Calle 43
+  lenght: 130
+  destiny: Av. San Juan >Occidente.S
+  sink_rate: 900
+  lanes: 1
+  green_phases:
+  - 1
+  sink_phi: 1.0
+xsection.phases:
+- id: 1
+  min_value: 13
+  max_value: 120
+- id: 2
+  min_value: 2
+  max_value: 2
+- id: 3
+  min_value: 13
+  max_value: 120
+- id: 4
+  min_value: 1
+  max_value: 1
+xsection.maxCycle: 120

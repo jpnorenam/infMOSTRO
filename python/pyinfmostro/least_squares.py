@@ -73,7 +73,9 @@ def routes_flow(xsection_name, source, workspace_dir, fv, datacarriles_list, edg
                 nphi += 1
             entries_matrix[nentry, entries + sinks + nentry] = M[-1]
             nentry += 1
-        ones_entries = np.clip(np.abs(entries_matrix), 0, 1)
+        ones_entries = np.zeros(entries_matrix.shape)
+        ones_entries[entries_matrix>0] = 1
+        # ones_entries = np.clip(np.abs(entries_matrix), 0.0, 1.0)
 
         sinks_matrix = np.zeros([entries + sinks + 1, len(routes_dict) + entries])
         nphi = 0
@@ -84,7 +86,10 @@ def routes_flow(xsection_name, source, workspace_dir, fv, datacarriles_list, edg
                 nphi += 1
             sinks_matrix[-1, entries + sinks + nsink] = M[-1]
             nsink += 1
-        ones_sinks = np.clip(np.abs(sinks_matrix), 0, 1)
+        
+        ones_sinks = np.zeros(sinks_matrix.shape)
+        ones_sinks[sinks_matrix>0] = 1
+        # ones_sinks = np.clip(np.abs(sinks_matrix), 0, 1)
         
         L_matrix = np.vstack([np.hstack([ones_entries, ones_sinks]), np.hstack([sinks_matrix, entries_matrix])])
 

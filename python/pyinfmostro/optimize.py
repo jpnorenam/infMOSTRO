@@ -35,13 +35,41 @@ def opt_plans(xsection_name, Fr, Fs, conf_routes, conf_phases, workspace_dir):
         constA = np.ones(len(x0))
         constraints =  opt.LinearConstraint(constA, tc_min, tc_max)
         optsol = opt.minimize(fun, x0, bounds = bounds, constraints = constraints, method='SLSQP',
-                              options={'maxiter': 1000, 'ftol': 1e-8, 'disp': False, 'eps': 0.00005},
+                              options={'maxiter': 1000, 'ftol': 1e-8, 'disp': False, 'eps': 1.0},
                               args=(H, Hc, fe_ps, fsm_ps))
+
+        # print(fe_ps)
+        # print(optsol.x)
+        
+        # Busqueda exhaustiva
+        # f0 = np.arange(13, 66, 1)
+        # f5 = np.arange(13, 66, 1)
+
+        # result = np.zeros((len(f0),len(f0)))
+
+        # ind0 = 0
+        # ind1 = 0
+        
+        # for f_0 in f0:
+        #     for f_5 in f5:
+        #         result[ind0, ind1] = fun_be(f_0, f_5, H, Hc, fe_ps, fsm_ps)
+        #         ind1 += 1
+        #     ind1 = 0
+        #     ind0 += 1
+        
+        # plt.figure()
+        # plt.imshow(result, cmap='hot', interpolation='nearest', extent=[13, 66, 66, 13])
+        # plt.plot(f5, 79-f5, c='b')
+        # plt.colorbar()
+        # plt.title("Cluster " + str(clust))
+        # plt.scatter(x=optsol.x[5],y=optsol.x[0])
+
         xopt = optsol.x
         #x0 = xopt
         tc = np.sum(xopt)
         funval = optsol.fun
         phasetimes[clust, :] = xopt
+    # plt.show()
     df = pd.DataFrame(phasetimes, columns = phase_ids)
     df.to_csv(os.path.join(workspace_dir,"phase_times.csv"))
     print("[pyinfmostro {}] writting optimal planning results to workspace.".format(xsection_name))
@@ -53,4 +81,13 @@ def fun(x, *args):
     #alpha = t_c * 0.004 + 0.52
     #val = (fe_ps*(Hc @ x)) / (alpha*fsm_ps*(H @ x))
     val = (args[2]*(args[1] @ x)) / (alpha*args[3]*(args[0] @ x))
+    return np.max(val)
+
+def fun_be(f0, f5, H, Hc, fe_ps, fsm_ps):
+    x = np.array([[f0], [20], [1], [16], [2], [f5], [2]])
+    t_c = (np.sum(x))
+    alpha = 1.0
+    #alpha = t_c * 0.004 + 0.52
+    #val = (fe_ps*(Hc @ x)) / (alpha*fsm_ps*(H @ x))
+    val = (fe_ps*(Hc @ x)) / (alpha*fsm_ps*(H @ x))
     return np.max(val)

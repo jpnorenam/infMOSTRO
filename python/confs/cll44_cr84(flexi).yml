@@ -1,0 +1,123 @@
+## Descomentar esto para descargar datos nuevos
+append_historical:
+  host: "168.176.124.56:9200"
+  start_date: "2019-07-01"
+  end_date: "2020-02-10"
+  delete_source: false
+## Dejar vació cuando la fuente es ars
+  index: "unal_flexi*"
+#
+#
+## Informacion general de la interseccion
+## xsection.source debe ser ars o flexi
+xsection.source: flexi
+xsection.name: cll44_cr84
+xsection.workspace: ./data/cll44_cr84/flexi/
+xsection.edges:
+- name: Av. San Juan >Oriente
+  entry: true
+  datacarril:
+  - Av. San Juan >Oriente
+- name: Av. San Juan >Occidente
+  entry: true
+  datacarril:
+  - Av. San Juan >Occidente
+- name: Carrera 84 >(N)
+  entry: true
+  datacarril:
+  - Carrera 84 >(N)
+- name: Carrera 84 >(S)
+  entry: true
+  datacarril:
+  - Carrera 84 >(S)
+- name: Av. San Juan >Oriente.S
+  entry: false
+  datacarril:
+  - Av. San Juan >Oriente.S
+- name: Carrera 84 >(S).S
+  entry: false
+  datacarril:
+  - Carrera 84 >(S).S
+- name: Av. San Juan >Occidente.S
+  entry: false
+  datacarril:
+  - Av. San Juan >Occidente.S
+xsection.routes:
+- origin: Av. San Juan >Oriente
+  lenght: 98
+  destiny: Av. San Juan >Oriente.S
+  sink_rate: 1000
+  lanes: 3
+  green_phases:
+  - 5
+  sink_phi: 0.8
+- origin: Av. San Juan >Oriente
+  lenght: 98
+  destiny: Carrera 84 >(S).S
+  sink_rate: 1000
+  lanes: 1
+  green_phases:
+  - 5
+  sink_phi: 0.2
+- origin: Av. San Juan >Occidente
+  lenght: 134
+  destiny: Av. San Juan >Occidente.S
+  sink_rate: 1600
+  lanes: 3
+  green_phases:
+  - 3
+  - 4
+  - 5
+  sink_phi: 1.0
+- origin: Carrera 84 >(N)
+  lenght: 200
+  destiny: Av. San Juan >Oriente.S
+  sink_rate: 800
+  lanes: 1
+  green_phases:
+  - 3
+  sink_phi: 1.0
+- origin: Carrera 84 >(S)
+  lenght: 127
+  destiny: Carrera 84 >(S).S
+  sink_rate: 1100
+  lanes: 1
+  green_phases:
+  - 1
+  sink_phi: 0.6
+- origin: Carrera 84 >(S)
+  lenght: 127
+  destiny: Av. San Juan >Occidente.S
+  sink_rate: 1100
+  lanes: 1
+  green_phases:
+  - 1
+  sink_phi: 0.2
+- origin: Carrera 84 >(S)
+  lenght: 127
+  destiny: Av. San Juan >Oriente.S
+  sink_rate: 1100
+  lanes: 1
+  green_phases:
+  - 1
+  sink_phi: 0.2
+xsection.phases:
+- id: 1
+  min_value: 13
+  max_value: 70
+- id: 2
+  min_value: 1
+  max_value: 1
+- id: 3
+  min_value: 13
+  max_value: 70
+- id: 4
+  min_value: 1
+  max_value: 1
+- id: 5
+  min_value: 13
+  max_value: 70
+- id: 6
+  min_value: 22
+  max_value: 22
+xsection.maxCycle: 70
